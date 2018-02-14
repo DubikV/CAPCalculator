@@ -1,8 +1,77 @@
 <resources>
-    <string name="app_name">CAPCalculator</string>
+    <string name="app_name">ФОП Калькулятор</string>
+    <string name="dev_mail">vanyadubik@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+
+    <string name="action_calc_money">Розрахунок суми виплати</string>
+    <string name="action_calc_tax">Розрахунок податків від суми</string>
+    <string name="action_calc_money_short">Розрахунок суми</string>
+    <string name="action_calc_tax_short">Розрахунок податків</string>
+    <string name="other">Інше</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="action_exit">Вихід</string>
+    <string name="action_save">Зберегти</string>
+    <string name="action_calculate">Розрахувати</string>
+    <string name="action_default">Відновити за замовчуванням</string>
+
+    <string name="person">Особа</string>
+    <string name="tax_system">Система оподаткування</string>
+    <string name="group">Группа</string>
+    <string name="tax">ПДВ</string>
+
+    <string name="income">Дохід</string>
+
+    <string name="income_amount">Сума доходу</string>
+
+    <string name="income_with_tax">Дохід з ПДВ</string>
+    <string name="income_without_tax">Дохід без ПДВ</string>
+    <string name="costs">Витрати</string>
+    <string name="costs_with_tax">Витрати з ПДВ</string>
+
+
+    <string name="living_min">Прожиточный минимум</string>
+    <string name="living_min_short">ПМПО</string>
+
+    <string name="salary">Мінімальна зарплатня</string>
+    <string name="salary_short">Зарплатня</string>
+
+    <string name="single_tax_rate">Ставка єдиного податку</string>
+    <string name="first_group_percent">Перша група, %</string>
+    <string name="second_group_percent">Друга група, %</string>
+    <string name="third_group_percent_tax">Третя група з ПДВ, %</string>
+    <string name="third_group_percent">Третя група без ПДВ, %</string>
+
+    <string name="single_social_contribution">Единий соціальний внесок</string>
+    <string name="single_soc_contr_percent">Ставка ЄСВ, %</string>
+
+    <string name="military_percent_short">Військовий збір</string>
+    <string name="military_percent">Військовий збір, %</string>
+
+    <string name="income_tax">ПДФО</string>
+
+    <string name="double_press_exit">Будь ласка, натисніть ще раз НАЗАД, щоб закрити програму</string>
+    <string name="questions_exit">Ви впевнені що хочете вийти ?</string>
+    <string name="questions_data_save">Зберегти дані?</string>
+    <string name="questions_data_set_default">Відновити за замовчуванням?</string>
+    <string name="questions_title_info">Інфо</string>
+    <string name="questions_answer_yes">Так</string>
+    <string name="questions_answer_save">Зберегти</string>
+    <string name="questions_answer_no">Ні</string>
+    <string name="questions_answer_cancel">Відмінити</string>
+    <string name="questions_answer_ok">Ок</string>
+
+    <string name="tax_system_1">Спрощена</string>
+    <string name="tax_system_2">Загальна</string>
+    <string name="tax_system_3">Незалежна проф. діяльність</string>
+
+    <string name="group_1">Перша група</string>
+    <string name="group_2">Друга група</string>
+    <string name="group_3">Третя група</string>
+
+    <string name="tax_1">З ПДВ</string>
+    <string name="tax_2">Без ПДВ</string>
+
 </resources>

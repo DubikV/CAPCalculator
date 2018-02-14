@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/animal_detail_card_margin">
+
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tax_system"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/text_size_standart"/>
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dip"
+                            android:layout_marginLeft="10dip"
+                            android:layout_marginRight="10dip"
+                            android:background="@color/colorAccent"
+                            android:layout_gravity="center_vertical"/>
+
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/tax_system"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/tax_system"
+                            android:maxLines="1"
+                            android:focusable="false"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            app:drawableRightCompat="@drawable/ic_more_horiz"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/group"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/group"
+                            android:maxLines="1"
+                            android:focusable="false"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            app:drawableRightCompat="@drawable/ic_more_horiz"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tax_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/tax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/tax"
+                            android:maxLines="1"
+                            android:focusable="false"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            app:drawableRightCompat="@drawable/ic_more_horiz"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/animal_detail_card_margin">
+
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/income"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/text_size_standart"/>
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dip"
+                            android:layout_marginLeft="10dip"
+                            android:layout_marginRight="10dip"
+                            android:background="@color/colorAccent"
+                            android:layout_gravity="center_vertical"/>
+
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/income_all"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/income_amount"
+                            android:maxLines="1"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            android:inputType="numberDecimal"
+                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/costs_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/animal_detail_card_margin">
+
+                <LinearLayout
+                    style="@style/Widget.CardContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:background="@color/colorWhite"
+                        android:layout_marginBottom="@dimen/margin_ctext_layout">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/costs"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/text_size_standart"/>
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dip"
+                            android:layout_marginLeft="10dip"
+                            android:layout_marginRight="10dip"
+                            android:background="@color/colorAccent"
+                            android:layout_gravity="center_vertical"/>
+
+                        <Switch
+                            android:id="@+id/using_scan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:textOff="@string/questions_answer_no"
+                            android:textOn="@string/questions_answer_yes"
+                            android:text=" gdfgdf"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor="@color/colorAccent"
+                            android:layout_alignParentRight="true"
+                            android:button="@null"/>
+
+                    </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/costs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/costs"
+                            android:maxLines="1"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            android:inputType="numberDecimal"
+                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/button_calculate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/animal_detail_card_margin"
+                android:layout_marginBottom="@dimen/animal_detail_card_margin"
+                android:text="@string/action_calculate"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_standart"
+                android:background="@color/colorPrimary"/>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>
