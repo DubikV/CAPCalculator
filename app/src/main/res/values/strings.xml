@@ -16,6 +16,7 @@
     <string name="action_save">Зберегти</string>
     <string name="action_calculate">Розрахувати</string>
     <string name="action_default">Відновити за замовчуванням</string>
+    <string name="action_info">Інформація</string>
 
     <string name="person">Особа</string>
     <string name="tax_system">Система оподаткування</string>
@@ -29,8 +30,9 @@
     <string name="income_with_tax">Дохід з ПДВ</string>
     <string name="income_without_tax">Дохід без ПДВ</string>
     <string name="costs">Витрати</string>
+    <string name="costs_amount">Сума витрат</string>
     <string name="costs_with_tax">Витрати з ПДВ</string>
-
+    <string name="costs_without_tax">Витрати без ПДВ</string>
 
     <string name="living_min">Прожиточный минимум</string>
     <string name="living_min_short">ПМПО</string>
@@ -73,5 +75,8 @@
 
     <string name="tax_1">З ПДВ</string>
     <string name="tax_2">Без ПДВ</string>
+
+    <!--Info-->
+    <string name="calculate_one_mounth">Розрахунок ведеться за один місяць</string>
 
 </resources>

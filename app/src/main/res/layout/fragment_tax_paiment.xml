@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.v4.widget.NestedScrollView
@@ -72,6 +73,7 @@
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/group_til"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -152,6 +154,7 @@
                     </LinearLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/income_all_til"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -162,6 +165,27 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/income_amount"
+                            android:maxLines="1"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            android:inputType="numberDecimal"
+                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/income_without_tax_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite"
+                        android:layout_marginTop="@dimen/margin_ctext_layout">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/income_without_tax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/income_without_tax"
                             android:maxLines="1"
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
@@ -208,22 +232,10 @@
                             android:background="@color/colorAccent"
                             android:layout_gravity="center_vertical"/>
 
-                        <Switch
-                            android:id="@+id/using_scan"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:textOff="@string/questions_answer_no"
-                            android:textOn="@string/questions_answer_yes"
-                            android:text=" gdfgdf"
-                            android:textSize="@dimen/text_size_standart"
-                            android:textColor="@color/colorAccent"
-                            android:layout_alignParentRight="true"
-                            android:button="@null"/>
-
                     </LinearLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/costs_til"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -233,7 +245,27 @@
                             android:id="@+id/costs"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/costs"
+                            android:hint="@string/costs_amount"
+                            android:maxLines="1"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            android:inputType="numberDecimal"
+                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/costs_without_tax_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/costs_without_tax"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/costs_without_tax"
                             android:maxLines="1"
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
@@ -256,6 +288,14 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_standart"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_ctext_layout"
+                android:text="@string/calculate_one_mounth"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_standart"/>
 
 
         </LinearLayout>
