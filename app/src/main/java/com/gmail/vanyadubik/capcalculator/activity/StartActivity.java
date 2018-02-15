@@ -1,8 +1,10 @@
 package com.gmail.vanyadubik.capcalculator.activity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +31,8 @@ public class StartActivity extends AppCompatActivity
     private boolean doubleBackToExitPressedOnce = false;
 
     private Toolbar toolbar;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private NavigationView navigationView;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
 
@@ -42,13 +46,13 @@ public class StartActivity extends AppCompatActivity
         mFragmentManager = getSupportFragmentManager();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
 
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -109,7 +113,7 @@ public class StartActivity extends AppCompatActivity
         int id = item.getItemId();
 
         mFragmentTransaction = mFragmentManager.beginTransaction();
-        
+
         if (id == R.id.nav_calc_money) {
             mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
             getSupportActionBar().setSubtitle(R.string.action_calc_money);
@@ -140,6 +144,18 @@ public class StartActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     private void showBubbleMessage(){

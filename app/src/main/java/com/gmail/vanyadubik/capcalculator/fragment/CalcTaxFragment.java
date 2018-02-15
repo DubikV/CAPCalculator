@@ -1,5 +1,8 @@
 package com.gmail.vanyadubik.capcalculator.fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -8,9 +11,11 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.gmail.vanyadubik.capcalculator.R;
+import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
 
@@ -25,6 +30,7 @@ public class CalcTaxFragment extends Fragment{
     private TextInputLayout groupTIL, taxTIL, incomeWithoutTaxTIL, incomeAllTIL,
             costsAllTIL, costsWithoutTaxTIL;
     private CardView costsCard;
+    private Button buttonCalculate;
 
     private List<String> listTaxSystem, listGroup, listTax;
     private int selectedtaxSystem, selectedGroup, selectedTax;
@@ -106,6 +112,15 @@ public class CalcTaxFragment extends Fragment{
                         });
             }
         });
+
+        buttonCalculate = (Button) view.findViewById(R.id.button_calculate);
+        buttonCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                calcResult();
+            }
+        });
+
 
         groupTIL.setVisibility(View.GONE);
         taxTIL.setVisibility(View.GONE);
@@ -200,7 +215,20 @@ public class CalcTaxFragment extends Fragment{
             default:
                 return;
         }
+    }
 
+    private void calcResult(){
+
+        Intent intent = new Intent(getActivity(), ResultActivity.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                    getActivity(),
+                    android.util.Pair.create((View) buttonCalculate, "bg"));
+            startActivity(intent, options.toBundle());
+        } else {
+            startActivity(intent);
+        }
 
     }
 

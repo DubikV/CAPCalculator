@@ -26,6 +26,11 @@
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/ThemeNoActionBar"/>
 
+        <activity
+            android:name=".activity.ResultActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/ThemeNoActionBar"/>
+
     </application>
 
 </manifest>

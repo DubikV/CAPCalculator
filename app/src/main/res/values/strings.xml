@@ -79,4 +79,7 @@
     <!--Info-->
     <string name="calculate_one_mounth">Розрахунок ведеться за один місяць</string>
 
+
+    <string name="result_calс">Результат розрахунку</string>
+
 </resources>
