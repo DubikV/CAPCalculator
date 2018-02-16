@@ -136,11 +136,7 @@ public class StartActivity extends AppCompatActivity
                         @Override
                         public void onNeutralAnsver() {}
                     });
-
-
-
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -159,7 +155,6 @@ public class StartActivity extends AppCompatActivity
     }
 
     private void showBubbleMessage(){
-
         View bubbleMessageView = this.getLayoutInflater().inflate(R.layout.layout_tip_content_horizontal, null);
         final EasyDialog bubbleMessage = new EasyDialog(StartActivity.this)
                 .setLayout(bubbleMessageView)
@@ -174,7 +169,6 @@ public class StartActivity extends AppCompatActivity
                 .setMatchParent(true)
                 .setMarginLeftAndRight(25, 25)
                 .setOutsideColor(StartActivity.this.getResources().getColor(R.color.outside_color_dark_gray));
-
         ImageButton closeMessage = (ImageButton) bubbleMessageView.findViewById(R.id.closeMessage);
         closeMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +176,6 @@ public class StartActivity extends AppCompatActivity
                 bubbleMessage.dismiss();
             }
         });
-
         bubbleMessage.show();
     }
 }

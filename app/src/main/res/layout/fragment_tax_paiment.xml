@@ -169,6 +169,7 @@
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
                             android:inputType="numberDecimal"
+                            android:digits="0123456789,₴"
                             app:drawableRightCompat="@drawable/ic_keyboard"/>
 
                     </android.support.design.widget.TextInputLayout>

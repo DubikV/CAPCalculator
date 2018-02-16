@@ -22,8 +22,8 @@ public class Consts {
     public final static String PAR_INCOME_TAX = "mIncomeTax";
 
 
-    public final static Double LIVING_MIN = 1600.0;
-    public final static Double SALARY_MIN = 3200.0;
+    public final static Double LIVING_MIN = 1762.0;
+    public final static Double SALARY_MIN = 3723.0;
 
     public final static Double FIRST_GR_PERC = 10.0;
     public final static Double SECOND_GR_PERC = 20.0;

@@ -25,6 +25,7 @@
 
     <string name="income">Дохід</string>
 
+    <string name="all_tax">Всього податків</string>
     <string name="income_amount">Сума доходу</string>
 
     <string name="income_with_tax">Дохід з ПДВ</string>
@@ -47,12 +48,15 @@
     <string name="third_group_percent">Третя група без ПДВ, %</string>
 
     <string name="single_social_contribution">Единий соціальний внесок</string>
+    <string name="single_soc">ЄСВ</string>
     <string name="single_soc_contr_percent">Ставка ЄСВ, %</string>
 
     <string name="military_percent_short">Військовий збір</string>
     <string name="military_percent">Військовий збір, %</string>
 
     <string name="income_tax">ПДФО</string>
+
+    <string name="single_tax">Єдиний податок</string>
 
     <string name="double_press_exit">Будь ласка, натисніть ще раз НАЗАД, щоб закрити програму</string>
     <string name="questions_exit">Ви впевнені що хочете вийти ?</string>
@@ -81,5 +85,10 @@
 
 
     <string name="result_calс">Результат розрахунку</string>
+    <string name="zero_money">0,0₴</string>
+    <string name="zero_symbol">₴</string>
+
+    <string name="which_is">що складає</string>
+    <string name="of_income">від доходу</string>
 
 </resources>
