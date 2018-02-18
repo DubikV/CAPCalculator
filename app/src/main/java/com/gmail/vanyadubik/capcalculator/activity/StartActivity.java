@@ -122,6 +122,8 @@ public class StartActivity extends AppCompatActivity
             getSupportActionBar().setSubtitle(R.string.action_calc_tax);
         } else if (id == R.id.nav_setting) {
             startActivity(new Intent(StartActivity.this, SettingsActivity.class));
+        } else if (id == R.id.nav_info) {
+            startActivity(new Intent(StartActivity.this, InfoActivity.class));
         } else if (id == R.id.nav_exit) {
             ActivityUtils.showQuestion(StartActivity.this, getString(R.string.action_exit),
                     getString(R.string.questions_exit),

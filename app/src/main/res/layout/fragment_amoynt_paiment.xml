@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <android.support.v4.widget.NestedScrollView
@@ -168,27 +169,7 @@
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
                             android:inputType="numberDecimal"
-                            app:drawableRightCompat="@drawable/ic_keyboard"/>
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/income_without_tax_til"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@color/colorWhite"
-                        android:layout_marginTop="@dimen/margin_ctext_layout">
-
-                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
-                            android:id="@+id/income_without_tax"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/income_without_tax"
-                            android:maxLines="1"
-                            android:textSize="@dimen/text_size_standart"
-                            android:textColor ="@color/colorAccent"
-                            android:inputType="numberDecimal"
+                            android:digits="0123456789,₴"
                             app:drawableRightCompat="@drawable/ic_keyboard"/>
 
                     </android.support.design.widget.TextInputLayout>
@@ -208,7 +189,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -216,34 +197,85 @@
                         android:background="@color/colorWhite"
                         android:layout_marginBottom="@dimen/margin_ctext_layout">
 
-                        <TextView
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/costs"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_size_standart"/>
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal"
+                            android:layout_marginRight="50dp">
 
-                        <View
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/costs"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/text_size_standart"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"/>
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_height="1dip"
+                                android:layout_marginLeft="10dip"
+                                android:layout_marginRight="10dip"
+                                android:background="@color/colorAccent"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+                        <Switch
+                            android:id="@+id/using_add_costs"
                             android:layout_width="wrap_content"
-                            android:layout_height="1dip"
-                            android:layout_marginLeft="10dip"
-                            android:layout_marginRight="10dip"
-                            android:background="@color/colorAccent"
+                            android:layout_height="wrap_content"
+                            android:checked="false"
+                            android:textOff="@string/questions_answer_no"
+                            android:textOn="@string/questions_answer_yes"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor="@color/colorAccent"
+                            android:layout_alignParentEnd="true"
+                            android:button="@null"
+                            android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"/>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/costs_add_percent_til"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorWhite">
 
                         <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
-                            android:id="@+id/costs"
+                            android:id="@+id/costs_add_percent"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/costs"
+                            android:hint="@string/costs_add_percent"
+                            android:maxLines="1"
+                            android:textSize="@dimen/text_size_standart"
+                            android:textColor ="@color/colorAccent"
+                            android:inputType="numberDecimal"
+                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/costs_add_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/colorWhite">
+
+                        <com.gmail.vanyadubik.capcalculator.ui.widget.DrawableEditText
+                            android:id="@+id/costs_add"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/costs_add"
                             android:maxLines="1"
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
@@ -266,6 +298,14 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_standart"
                 android:background="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_ctext_layout"
+                android:text="@string/calculate_one_mounth"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_standart"/>
 
 
         </LinearLayout>

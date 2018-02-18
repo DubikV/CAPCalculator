@@ -35,6 +35,9 @@
     <string name="costs_with_tax">Витрати з ПДВ</string>
     <string name="costs_without_tax">Витрати без ПДВ</string>
 
+    <string name="costs_add">Додаткові витрати</string>
+    <string name="costs_add_percent">Додаткові витрати, %</string>
+
     <string name="living_min">Прожиточный минимум</string>
     <string name="living_min_short">ПМПО</string>
 
@@ -85,10 +88,13 @@
 
 
     <string name="result_calс">Результат розрахунку</string>
-    <string name="zero_money">0,0₴</string>
+    <string name="zero_money">0,00₴</string>
     <string name="zero_symbol">₴</string>
 
     <string name="which_is">що складає</string>
-    <string name="of_income">від доходу</string>
+    <string name="of_income">% від доходу</string>
+
+    <string name="log_error_name">Звіт про помилку</string>
+    <string name="сontact_developer">Зв\'язатися з розробником</string>
 
 </resources>

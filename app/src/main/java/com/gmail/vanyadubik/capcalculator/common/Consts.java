@@ -2,6 +2,8 @@ package com.gmail.vanyadubik.capcalculator.common;
 
 public class Consts {
 
+    public static final String APPLICATION_PROPERTIES = "application.properties";
+
     public final static String PAR_TAX_SUSTEM = "mTaxSustem";
     public final static String PAR_GROUP = "mGroup";
     public final static String PAR_TAX = "mTax";

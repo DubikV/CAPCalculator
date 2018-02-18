@@ -2,20 +2,33 @@ package com.gmail.vanyadubik.capcalculator.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gmail.vanyadubik.capcalculator.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -39,6 +52,7 @@ public class ResultActivity extends AppCompatActivity {
     private Transition.TransitionListener mTransitionListener;
     private TextView taxSystem, group, tax, incomeAll, taxAll, taxAllPercent,
             taxSoc, taxIncome, taxMilitary, taxTax, taxSingle;
+    private View container;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -51,6 +65,7 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear);
         getSupportActionBar().setTitle(R.string.result_calс);
 
+        container = (View) findViewById(R.id.container);
         taxSystem = (TextView) findViewById(R.id.tax_system);
         group = (TextView) findViewById(R.id.group);
         tax = (TextView) findViewById(R.id.tax);
@@ -107,6 +122,29 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.result, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if(id == R.id.action_share_result){
+
+            Bitmap screen = getScreenShot(container);
+
+            shareImage(store(screen, "tax_result_screenshot.jpeg"));
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         closeAnimation();
         finish();
@@ -129,33 +167,29 @@ public class ResultActivity extends AppCompatActivity {
             String taxRes = extras.getString(TAX_RESULT);
             tax.setText(taxRes == null || taxRes.isEmpty() ? "--" : taxRes);
 
-            String zeroMoneyString = getResources().getString(R.string.zero_money);
-            String zeroSymbolString = getResources().getString(R.string.zero_symbol);
+            setTextFromExtras(incomeAll,  extras, INCOME_ALL_RESULT);
+            setTextFromExtras(taxAll,  extras, TAX_ALL_RESULT);
 
-            Double incomeAllRes = extras.getDouble(INCOME_ALL_RESULT);
-            incomeAll.setText(incomeAllRes == null || incomeAllRes==0 ? zeroMoneyString : String.valueOf(incomeAllRes)+zeroSymbolString);
+            Double taxAllPercentRes = extras.getDouble(TAX_ALL_PERCENT_RESULT);
+            String datastring = NumberFormat.getNumberInstance(new Locale("ua", "UA")).format(taxAllPercentRes);
+            taxAllPercent.setText(getResources().getString(R.string.which_is)+" "+datastring+getResources().getString(R.string.of_income));
 
-            Double taxAllRes = extras.getDouble(TAX_ALL_RESULT);
-            taxAll.setText(taxAllRes == null || taxAllRes==0 ? zeroMoneyString : String.valueOf(taxAllRes)+zeroSymbolString);
-
-            Double taxAllPercentRes = extras.getDouble(INCOME_ALL_RESULT);
-            taxAllPercent.setText(getResources().getString(R.string.which_is)+" " + String.valueOf(taxAllPercentRes)+getResources().getString(R.string.of_income));
-
-            Double taxSocRes = extras.getDouble(TAX_SOC_RESULT);
-            taxSoc.setText(taxSocRes == null || taxSocRes==0 ? zeroMoneyString : String.valueOf(taxSocRes)+zeroSymbolString);
-
-            Double taxIncomeRes = extras.getDouble(TAX_INCOME_RESULT);
-            taxIncome.setText(taxIncomeRes == null || taxIncomeRes==0 ? zeroMoneyString : String.valueOf(taxIncomeRes)+zeroSymbolString);
-
-            Double taxMilitaryRes = extras.getDouble(TAX_INCOME_RESULT);
-            taxMilitary.setText(taxMilitaryRes == null || taxMilitaryRes==0 ? zeroMoneyString : String.valueOf(taxMilitaryRes)+zeroSymbolString);
-
-            Double taxTaxRes = extras.getDouble(TAX_TAX_RESULT);
-            taxTax.setText(taxTaxRes == null || taxTaxRes==0 ? zeroMoneyString : String.valueOf(taxTaxRes)+zeroSymbolString);
-
-            Double taxSingleRes = extras.getDouble(TAX_SINGLE_RESULT);
-            taxSingle.setText(taxSingleRes == null || taxSingleRes==0 ? zeroMoneyString : String.valueOf(taxSingleRes)+zeroSymbolString);
+            setTextFromExtras(taxSoc,  extras, TAX_SOC_RESULT);
+            setTextFromExtras(taxIncome,  extras, TAX_INCOME_RESULT);
+            setTextFromExtras(taxMilitary,  extras, TAX_MILITARY_RESULT);
+            setTextFromExtras(taxTax,  extras, TAX_TAX_RESULT);
+            setTextFromExtras(taxSingle,  extras, TAX_SINGLE_RESULT);
         }
+    }
+
+    private void setTextFromExtras(TextView textView,  Bundle extras, String nameParam){
+        String zeroMoneyString = getResources().getString(R.string.zero_money);
+        Double data = extras.getDouble(nameParam);
+
+        String datastring = NumberFormat.getCurrencyInstance(new Locale("ua", "UA")).format(data);
+
+        textView.setText(datastring == null || datastring.isEmpty() ? zeroMoneyString : datastring);
+
     }
 
     private void closeAnimation(){
@@ -242,5 +276,47 @@ public class ResultActivity extends AppCompatActivity {
         }
         anim.start();
 
+    }
+
+    public static Bitmap getScreenShot(View view) {
+        View screenView = view.getRootView();
+        screenView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
+        screenView.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
+    public static File store(Bitmap bm, String fileName){
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
+        File dir = new File(dirPath);
+        if(!dir.exists())
+            dir.mkdirs();
+        File file = new File(dirPath, fileName);
+        try {
+            FileOutputStream fOut = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
+            fOut.flush();
+            fOut.close();
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private void shareImage(File file){
+        if(file==null) return;
+        Uri uri = Uri.fromFile(file);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        intent.setType("image/*");
+
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, "");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        try {
+            startActivity(Intent.createChooser(intent, "Share Screenshot"));
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "No App Available", Toast.LENGTH_SHORT).show();
+        }
     }
 }

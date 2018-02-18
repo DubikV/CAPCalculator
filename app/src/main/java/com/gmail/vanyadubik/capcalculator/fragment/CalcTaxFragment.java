@@ -9,7 +9,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +19,20 @@ import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
-
+import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
 import java.util.List;
 
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.GROUP_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.INCOME_ALL_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_ALL_PERCENT_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_ALL_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_INCOME_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_MILITARY_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SINGLE_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SOC_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SYSTEM_RESULT;
+import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_TAX_RESULT;
 
 public class CalcTaxFragment extends Fragment{
     private static  final int LAYOUT = R.layout.fragment_tax_paiment;
@@ -145,93 +151,15 @@ public class CalcTaxFragment extends Fragment{
         return view;
     }
 
-    private void initTextWather(EditText view){
-        view.addTextChangedListener(new TextWatcher() {
-            int length_before = 0;
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                length_before = s.length();
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (length_before < s.length()) {
-//                    if (s.length() == 1) {
-//                        if (Character.isDigit(s.charAt(0)))
-//                            s.insert(0, ",");
-//                    }
-//                    if (s.length() == 4) {
-//                        s.append(")");
-//                        if (s.length() > 4) {
-//                            if (Character.isDigit(s.charAt(4)))
-//                                s.insert(4, ")");
-//                        }
-//                    }
-//                    if (s.length() == 8 || s.length() == 11) {
-//                        s.append("-");
-//                        if (s.length() > 8) {
-//                            if (Character.isDigit(s.charAt(8)))
-//                                s.insert(8, "-");
-//                        }
-//                        if (s.length() > 11) {
-//                            if (Character.isDigit(s.charAt(11)))
-//                                s.insert(11, "-");
-//                        }
-//                    }
-                    s.insert(s.length()-1, "₴");
-                }
-
-                String digits = s.toString();
-//                String string = "£";
-//                // Amount length greater than 2 means we need to add a decimal point
-//                if (digits.length() > 2) {
-//                    String pound = digits.substring(0, digits.length() - 2); // Pound part
-//                    String pence = digits.substring(digits.length() - 2); // Pence part
-//                    string += pound + "." + pence;
-//                } else if (digits.length() == 1) {
-//                    string += "0.0" + digits;
-//                } else if (digits.length() == 2) {
-//                    string += "0." + digits;
-//                }
-
-
-
-                String string = "&"; // Your currency
-                // Amount length greater than 2 means we need to add a decimal point
-                if (digits.length() > 2)
-                {
-                    String pound = digits.substring(0, digits.length() - 2); // Pound
-                    // part
-                    String pence = digits.substring(digits.length() - 2); // Pence part
-                    string += pound + "." + pence;
-                }
-                else if (digits.length() == 1)
-                {
-                    string += "0.0" + digits;
-
-                }
-                else if (digits.length() == 2)
-                {
-                    string += "0." + digits;
-
-                }
-
-            }
-        });
-
+    private void initTextWather(final EditText view) {
+        view.addTextChangedListener(new MoneyTextWatcher(view));
     }
 
     private void setSelectionTaxSystem(int item){
         selectedtaxSystem = item;
         taxSystem.setText(listTaxSystem.get(item));
-        incomeAll.setText("0.0");
-        costsAll.setText("0.0");
+        incomeAll.setText("0,00");
+        costsAll.setText("0,00");
         groupTIL.setVisibility(View.GONE);
         taxTIL.setVisibility(View.GONE);
         costsCard.setVisibility(View.GONE);
@@ -279,8 +207,8 @@ public class CalcTaxFragment extends Fragment{
     private void setSelectionTax(int item){
         selectedTax = item;
         tax.setText(listTax.get(item));
-        incomeWithoutTax.setText("0.0");
-        costsWithoutTax.setText("0.0");
+        incomeWithoutTax.setText("0,00");
+        costsWithoutTax.setText("0,00");
         incomeWithoutTaxTIL.setVisibility(View.GONE);
         switch (item) {
             case 0:
@@ -311,37 +239,18 @@ public class CalcTaxFragment extends Fragment{
 
     private void calcResult(){
 
-
-//        Double incomeAllRes = extras.getDouble(INCOME_ALL_RESULT);
-//        incomeAll.setText(incomeAllRes == null || incomeAllRes==0 ? zeroMoneyString : String.valueOf(incomeAllRes)+zeroSymbolString);
-//
-//        Double taxAllRes = extras.getDouble(TAX_ALL_RESULT);
-//        taxAll.setText(taxAllRes == null || taxAllRes==0 ? zeroMoneyString : String.valueOf(taxAllRes)+zeroSymbolString);
-//
-//        Double taxAllPercentRes = extras.getDouble(INCOME_ALL_RESULT);
-//        taxAllPercent.setText(getResources().getString(R.string.which_is)+" " + String.valueOf(taxAllPercentRes)+getResources().getString(R.string.of_income));
-//
-//        Double taxSocRes = extras.getDouble(TAX_SOC_RESULT);
-//        taxSoc.setText(taxSocRes == null || taxSocRes==0 ? zeroMoneyString : String.valueOf(taxSocRes)+zeroSymbolString);
-//
-//        Double taxIncomeRes = extras.getDouble(TAX_INCOME_RESULT);
-//        taxIncome.setText(taxIncomeRes == null || taxIncomeRes==0 ? zeroMoneyString : String.valueOf(taxIncomeRes)+zeroSymbolString);
-//
-//        Double taxMilitaryRes = extras.getDouble(TAX_INCOME_RESULT);
-//        taxMilitary.setText(taxMilitaryRes == null || taxMilitaryRes==0 ? zeroMoneyString : String.valueOf(taxMilitaryRes)+zeroSymbolString);
-//
-//        Double taxTaxRes = extras.getDouble(TAX_TAX_RESULT);
-//        taxTax.setText(taxTaxRes == null || taxTaxRes==0 ? zeroMoneyString : String.valueOf(taxTaxRes)+zeroSymbolString);
-
-//        Double taxSingleRes = extras.getDouble(TAX_SINGLE_RESULT);
-
         Intent intent = new Intent(getActivity(), ResultActivity.class);
         intent.putExtra(TAX_SYSTEM_RESULT, taxSystem.isShown() ? listTaxSystem.get(selectedtaxSystem) : null);
         intent.putExtra(GROUP_RESULT, group.isShown() ? listGroup.get(selectedGroup) : null);
         intent.putExtra(TAX_RESULT, tax.isShown() ? listTax.get(selectedTax) : null);
-        intent.putExtra(INCOME_ALL_RESULT, Double.valueOf(incomeAll.getText().toString()));
-
-//        Double.parseDouble(s.toString().replace(',', '.'));
+        intent.putExtra(INCOME_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_ALL_PERCENT_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_SOC_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_INCOME_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_MILITARY_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_TAX_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(TAX_SINGLE_RESULT, getDoubleFromString(incomeAll.getText()));
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -354,5 +263,14 @@ public class CalcTaxFragment extends Fragment{
         }
 
     }
+
+    private Double getDoubleFromString(Editable s){
+        String text = s.toString();
+        String cleanString = text.replaceAll("[ руб$₴.]", "");
+        String doubleString = cleanString.replaceAll("[,]", ".");
+        return Double.valueOf(String.valueOf(doubleString==null || doubleString.isEmpty() ? "0" : doubleString));
+    }
+
+
 
 }
