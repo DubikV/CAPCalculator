@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
 import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
+
 import java.util.List;
 
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.GROUP_RESULT;
@@ -166,6 +166,7 @@ public class CalcMoneyFragment extends Fragment{
         taxSystem.setText(listTaxSystem.get(item));
         incomeAll.setText("0,00");
         costsAddPercent.setText("0,00");
+        costsAdd.setText("0,00");
         groupTIL.setVisibility(View.GONE);
         taxTIL.setVisibility(View.GONE);
         switch (item) {

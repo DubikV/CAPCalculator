@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.vanyadubik.capcalculator.R;
@@ -16,8 +14,7 @@ import java.util.List;
 
 public class ActivityUtils {
 
-    public ActivityUtils() {
-    }
+    public ActivityUtils() {}
 
     public static void showMessage(String textMessage, Context mContext) {
         if (textMessage == null || textMessage.isEmpty()) {
@@ -35,17 +32,6 @@ public class ActivityUtils {
         });
         AlertDialog alert = builder.create();
         alert.show();
-
-        // TODO (start stub): to set size text in AlertDialog
-        TextView textView = (TextView) alert.findViewById(android.R.id.message);
-        textView.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_standart));
-        Button button1 = (Button) alert.findViewById(android.R.id.button1);
-        button1.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_standart));
-        Button button2 = (Button) alert.findViewById(android.R.id.button2);
-        button2.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_standart));
-        Button button3 = (Button) alert.findViewById(android.R.id.button3);
-        button3.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_standart));
-        // TODO: (end stub) ------------------
     }
 
     public static void showShortToast(Context mContext, String message){
@@ -88,19 +74,8 @@ public class ActivityUtils {
         });
         AlertDialog alert = builder.create();
         alert.setCanceledOnTouchOutside(false);
-//        alert.setCancelable(false);
+        alert.setCancelable(false);
         alert.show();
-
-        // TODO (start stub): to set size text in AlertDialog
-        TextView textView = (TextView) alert.findViewById(android.R.id.message);
-        textView.setTextSize(mActivity.getResources().getDimension(R.dimen.text_size_standart));
-        Button button1 = (Button) alert.findViewById(android.R.id.button1);
-        button1.setTextSize(mActivity.getResources().getDimension(R.dimen.text_size_standart));
-        Button button2 = (Button) alert.findViewById(android.R.id.button2);
-        button2.setTextSize(mActivity.getResources().getDimension(R.dimen.text_size_standart));
-        Button button3 = (Button) alert.findViewById(android.R.id.button3);
-        button3.setTextSize(mActivity.getResources().getDimension(R.dimen.text_size_standart));
-        // TODO: (end stub) ------------------
     }
 
     public interface QuestionAnswer {
@@ -110,7 +85,6 @@ public class ActivityUtils {
         void onNegativeAnsver();
 
         void onNeutralAnsver();
-
     }
 
     public static void hideKeyboard(Context context){
@@ -140,7 +114,6 @@ public class ActivityUtils {
     }
 
     public interface ListItemClick {
-
         void onItemClik(int item, String text);
     }
 

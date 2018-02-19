@@ -32,6 +32,8 @@ import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
 
+    private static final String NAME_SCREENSCHOT_FILE = "tax_result_screenshot.jpeg";
+
     public static final String TAX_SYSTEM_RESULT = "tax_system";
     public static final String GROUP_RESULT = "group";
     public static final String TAX_RESULT = "tax";
@@ -136,7 +138,7 @@ public class ResultActivity extends AppCompatActivity {
 
             Bitmap screen = getScreenShot(container);
 
-            shareImage(store(screen, "tax_result_screenshot.jpeg"));
+            shareImage(store(screen, NAME_SCREENSCHOT_FILE));
 
             return true;
         }
@@ -147,6 +149,10 @@ public class ResultActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         closeAnimation();
+
+        File file = new File(getScreenshotsDirPath(), NAME_SCREENSCHOT_FILE);
+        if(file.exists()) file.delete();
+
         finish();
     }
 
@@ -286,12 +292,16 @@ public class ResultActivity extends AppCompatActivity {
         return bitmap;
     }
 
-    public static File store(Bitmap bm, String fileName){
+    private static String getScreenshotsDirPath(){
         String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Screenshots";
         File dir = new File(dirPath);
         if(!dir.exists())
             dir.mkdirs();
-        File file = new File(dirPath, fileName);
+        return dirPath;
+    }
+
+    private static File store(Bitmap bm, String fileName){
+        File file = new File(getScreenshotsDirPath(), fileName);
         try {
             FileOutputStream fOut = new FileOutputStream(file);
             bm.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
@@ -303,6 +313,7 @@ public class ResultActivity extends AppCompatActivity {
             return null;
         }
     }
+
     private void shareImage(File file){
         if(file==null) return;
         Uri uri = Uri.fromFile(file);

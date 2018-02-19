@@ -22,8 +22,12 @@ import android.widget.Toast;
 import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.fragment.CalcMoneyFragment;
 import com.gmail.vanyadubik.capcalculator.fragment.CalcTaxFragment;
+import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
+import com.gmail.vanyadubik.capcalculator.utils.SharedStorage;
 import com.michael.easydialog.EasyDialog;
+
+import static com.gmail.vanyadubik.capcalculator.common.Consts.DATA_SET_DEFAULT;
 
 public class StartActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -59,6 +63,9 @@ public class StartActivity extends AppCompatActivity
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
         getSupportActionBar().setSubtitle(R.string.action_calc_money);
+
+        initMockData();
+
     }
 
     @Override
@@ -179,5 +186,12 @@ public class StartActivity extends AppCompatActivity
             }
         });
         bubbleMessage.show();
+    }
+
+    private void initMockData(){
+        if(!SharedStorage.getBoolean(this, DATA_SET_DEFAULT, false)){
+            MockData.setDefaultParams(this);
+            SharedStorage.setBoolean(this, DATA_SET_DEFAULT, true);
+        }
     }
 }

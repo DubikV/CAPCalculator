@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
+import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
 import com.gmail.vanyadubik.capcalculator.utils.SharedStorage;
 
 import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_FIRST_GR_PERC;
@@ -40,7 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.action_settings);
 
         livingMin = (EditText) findViewById(R.id.living_min);
+        initTextWather(livingMin);
         salaryMin = (EditText) findViewById(R.id.salary);
+        initTextWather(salaryMin);
         firstGrPerc = (EditText) findViewById(R.id.first_group_percent);
         secondGrPerc = (EditText) findViewById(R.id.second_group_percent);
         thirdGrPercTax = (EditText) findViewById(R.id.third_group_percent_tax);
@@ -142,7 +145,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initData(){
-
         livingMin.setText(String.valueOf(SharedStorage.getDouble(this, PAR_LIVING_MIN, 0.0)));
         salaryMin.setText(String.valueOf(SharedStorage.getDouble(this, PAR_SALARY_MIN, 0.0)));
         firstGrPerc.setText(String.valueOf(SharedStorage.getDouble(this, PAR_FIRST_GR_PERC, 0.0)));
@@ -152,15 +154,16 @@ public class SettingsActivity extends AppCompatActivity {
         sSocContr.setText(String.valueOf(SharedStorage.getDouble(this, PAR_SSC_PERCENT, 0.0)));
         militaryPercent.setText(String.valueOf(SharedStorage.getDouble(this, PAR_MILITARY_PERCENT, 0.0)));
         incomeTax.setText(String.valueOf(SharedStorage.getDouble(this, PAR_INCOME_TAX, 0.0)));
-
     }
 
-    private int getIntFromString(Editable s){
-        String text = String.valueOf(s);
-        return Integer.valueOf(String.valueOf(text==null || text.isEmpty() ? "0" : s));
+    private void initTextWather(final EditText view) {
+        view.addTextChangedListener(new MoneyTextWatcher(view));
     }
+
     private Double getDoubleFromString(Editable s){
-        String text = String.valueOf(s);
-        return Double.valueOf(String.valueOf(text==null || text.isEmpty() ? "0" : s));
+        String text = s.toString();
+        String cleanString = text.replaceAll("[ руб$₴.]", "");
+        String doubleString = cleanString.replaceAll("[,]", ".");
+        return Double.valueOf(String.valueOf(doubleString==null || doubleString.isEmpty() ? "0" : doubleString));
     }
 }
