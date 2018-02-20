@@ -20,7 +20,7 @@ import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
-import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
+import com.gmail.vanyadubik.capcalculator.utils.LocaleTextWatcher;
 
 import java.util.List;
 
@@ -73,14 +73,15 @@ public class CalcMoneyFragment extends Fragment{
         tax = (EditText) view.findViewById(R.id.tax);
         incomeAllTIL = (TextInputLayout) view.findViewById(R.id.income_all_til);
         incomeAll = (EditText) view.findViewById(R.id.income_all);
-        initTextWather(incomeAll);
+        initMoneyTextWather(incomeAll);
 
 
         costsAddPercentTIL = (TextInputLayout) view.findViewById(R.id.costs_add_percent_til);
         costsAddPercent = (EditText) view.findViewById(R.id.costs_add_percent);
+        initPercentTextWather(costsAddPercent);
         costsAddTIL = (TextInputLayout) view.findViewById(R.id.costs_add_til);
         costsAdd = (EditText) view.findViewById(R.id.costs_add);
-        initTextWather(costsAdd);
+        initMoneyTextWather(costsAdd);
         final Switch usingAddCosts = (Switch) view.findViewById(R.id.using_add_costs);
         usingAddCosts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -89,7 +90,7 @@ public class CalcMoneyFragment extends Fragment{
                 costsAddTIL.setVisibility(usingAddCosts.isChecked() ? View.VISIBLE : View.GONE);
             }
         });
-        initTextWather(costsAdd);
+        initMoneyTextWather(costsAdd);
 
         taxSystem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,8 +158,12 @@ public class CalcMoneyFragment extends Fragment{
         return view;
     }
 
-    private void initTextWather(final EditText view) {
-        view.addTextChangedListener(new MoneyTextWatcher(view));
+    private void initMoneyTextWather(final EditText view) {
+        view.addTextChangedListener(new LocaleTextWatcher(view, "%.2f ₴"));
+    }
+
+    private void initPercentTextWather(final EditText view) {
+        view.addTextChangedListener(new LocaleTextWatcher(view, "%.2f %%"));
     }
 
     private void setSelectionTaxSystem(int item){

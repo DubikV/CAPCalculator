@@ -33,9 +33,9 @@ public class MoneyTextWatcher
         if (s.isEmpty()) return;
         editText.removeTextChangedListener(this);
         String cleanString = s.replaceAll("[ руб$₴,.]", "");
-        if (length_before > s.length()) {
+       // if (length_before > s.length()) {
             cleanString = cleanString.substring(0, cleanString.length()-1);
-        }
+       // }
         BigDecimal parsed = new BigDecimal(cleanString).setScale(2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR);
         String formatted = NumberFormat.getCurrencyInstance(new Locale("ua", "UA")).format(parsed);
         editText.setText(formatted);

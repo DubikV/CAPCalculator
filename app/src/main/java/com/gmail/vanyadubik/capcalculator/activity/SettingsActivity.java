@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
-import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
+import com.gmail.vanyadubik.capcalculator.utils.LocaleTextWatcher;
 import com.gmail.vanyadubik.capcalculator.utils.SharedStorage;
 
 import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_FIRST_GR_PERC;
@@ -41,16 +41,23 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.action_settings);
 
         livingMin = (EditText) findViewById(R.id.living_min);
-        initTextWather(livingMin);
+        initMoneyTextWather(livingMin);
         salaryMin = (EditText) findViewById(R.id.salary);
-        initTextWather(salaryMin);
+        initMoneyTextWather(salaryMin);
         firstGrPerc = (EditText) findViewById(R.id.first_group_percent);
+        initPercentTextWather(firstGrPerc);
         secondGrPerc = (EditText) findViewById(R.id.second_group_percent);
+        initPercentTextWather(secondGrPerc);
         thirdGrPercTax = (EditText) findViewById(R.id.third_group_percent_tax);
+        initPercentTextWather(thirdGrPercTax);
         thirdGrPerc = (EditText) findViewById(R.id.third_group_percent);
+        initPercentTextWather(thirdGrPerc);
         sSocContr = (EditText) findViewById(R.id.single_soc_contr);
+        initPercentTextWather(sSocContr);
         militaryPercent = (EditText) findViewById(R.id.military_percent);
+        initPercentTextWather(militaryPercent);
         incomeTax = (EditText) findViewById(R.id.income_tax);
+        initPercentTextWather(incomeTax);
         Button setDefault = (Button) findViewById(R.id.button_default);
         setDefault.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,8 +163,12 @@ public class SettingsActivity extends AppCompatActivity {
         incomeTax.setText(String.valueOf(SharedStorage.getDouble(this, PAR_INCOME_TAX, 0.0)));
     }
 
-    private void initTextWather(final EditText view) {
-        view.addTextChangedListener(new MoneyTextWatcher(view));
+    private void initMoneyTextWather(final EditText view) {
+        view.addTextChangedListener(new LocaleTextWatcher(view, "%.2f ₴"));
+    }
+
+    private void initPercentTextWather(final EditText view) {
+        view.addTextChangedListener(new LocaleTextWatcher(view, "%.2f %%"));
     }
 
     private Double getDoubleFromString(Editable s){

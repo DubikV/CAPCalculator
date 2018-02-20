@@ -19,7 +19,8 @@ import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
-import com.gmail.vanyadubik.capcalculator.utils.MoneyTextWatcher;
+import com.gmail.vanyadubik.capcalculator.utils.LocaleTextWatcher;
+
 import java.util.List;
 
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.GROUP_RESULT;
@@ -72,17 +73,17 @@ public class CalcTaxFragment extends Fragment{
         tax = (EditText) view.findViewById(R.id.tax);
         incomeAllTIL = (TextInputLayout) view.findViewById(R.id.income_all_til);
         incomeAll = (EditText) view.findViewById(R.id.income_all);
-        initTextWather(incomeAll);
+        initMoneyTextWather(incomeAll);
         incomeWithoutTaxTIL = (TextInputLayout) view.findViewById(R.id.income_without_tax_til);
         incomeWithoutTax = (EditText) view.findViewById(R.id.income_without_tax);
-        initTextWather(incomeWithoutTax);
+        initMoneyTextWather(incomeWithoutTax);
         costsCard = (CardView) view.findViewById(R.id.costs_card);
         costsAllTIL = (TextInputLayout) view.findViewById(R.id.costs_til);
         costsAll = (EditText) view.findViewById(R.id.costs);
-        initTextWather(costsAll);
+        initMoneyTextWather(costsAll);
         costsWithoutTaxTIL = (TextInputLayout) view.findViewById(R.id.costs_without_tax_til);
         costsWithoutTax = (EditText) view.findViewById(R.id.costs_without_tax);
-        initTextWather(costsWithoutTax);
+        initMoneyTextWather(costsWithoutTax);
 
         taxSystem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,8 +152,8 @@ public class CalcTaxFragment extends Fragment{
         return view;
     }
 
-    private void initTextWather(final EditText view) {
-        view.addTextChangedListener(new MoneyTextWatcher(view));
+    private void initMoneyTextWather(final EditText view) {
+        view.addTextChangedListener(new LocaleTextWatcher(view, "%.2f ₴"));
     }
 
     private void setSelectionTaxSystem(int item){
