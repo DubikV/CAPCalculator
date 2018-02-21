@@ -152,15 +152,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        livingMin.setText(String.valueOf(SharedStorage.getDouble(this, PAR_LIVING_MIN, 0.0)));
-        salaryMin.setText(String.valueOf(SharedStorage.getDouble(this, PAR_SALARY_MIN, 0.0)));
-        firstGrPerc.setText(String.valueOf(SharedStorage.getDouble(this, PAR_FIRST_GR_PERC, 0.0)));
-        secondGrPerc.setText(String.valueOf(SharedStorage.getDouble(this, PAR_SECOND_GR_PERC, 0.0)));
-        thirdGrPercTax.setText(String.valueOf(SharedStorage.getDouble(this, PAR_THRID_GR_PERC_TAX, 0.0)));
-        thirdGrPerc.setText(String.valueOf(SharedStorage.getDouble(this, PAR_THRID_GR_PERC, 0.0)));
-        sSocContr.setText(String.valueOf(SharedStorage.getDouble(this, PAR_SSC_PERCENT, 0.0)));
-        militaryPercent.setText(String.valueOf(SharedStorage.getDouble(this, PAR_MILITARY_PERCENT, 0.0)));
-        incomeTax.setText(String.valueOf(SharedStorage.getDouble(this, PAR_INCOME_TAX, 0.0)));
+        livingMin.setText(readDataFromStorage(PAR_LIVING_MIN));
+        salaryMin.setText(readDataFromStorage(PAR_SALARY_MIN));
+        firstGrPerc.setText(readDataFromStorage(PAR_FIRST_GR_PERC));
+        secondGrPerc.setText(readDataFromStorage(PAR_SECOND_GR_PERC));
+        thirdGrPercTax.setText(readDataFromStorage(PAR_THRID_GR_PERC_TAX));
+        thirdGrPerc.setText(readDataFromStorage(PAR_THRID_GR_PERC));
+        sSocContr.setText(readDataFromStorage(PAR_SSC_PERCENT));
+        militaryPercent.setText(readDataFromStorage(PAR_MILITARY_PERCENT));
+        incomeTax.setText(readDataFromStorage(PAR_INCOME_TAX));
+    }
+
+    private String readDataFromStorage(String nameParam){
+        return String.format("%.2f", SharedStorage.getDouble(this, nameParam, 0.0));
     }
 
     private void initMoneyTextWather(final EditText view) {
@@ -173,7 +177,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Double getDoubleFromString(Editable s){
         String text = s.toString();
-        String cleanString = text.replaceAll("[ руб$₴.]", "");
+        String cleanString = text.replaceAll("[ руб$₴.%]", "");
         String doubleString = cleanString.replaceAll("[,]", ".");
         return Double.valueOf(String.valueOf(doubleString==null || doubleString.isEmpty() ? "0" : doubleString));
     }

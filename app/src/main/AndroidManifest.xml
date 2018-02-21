@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.gmail.vanyadubik.capcalculator">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -38,6 +39,21 @@
             android:name=".activity.InfoActivity"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/ThemeNoActionBar"/>
+
+        <activity
+            android:name=".logs.ReportActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+            android:label="@string/log_error_name"
+            android:noHistory="true"
+            android:process=":report_process"
+            android:theme="@android:style/Theme.NoDisplay"/>
+
+        <provider android:name=".logs.ReportFilesProvider"
+                  android:process=":report_process"
+                  android:authorities="com.gmail.vanyadubik.capcalculator.filesprovider"
+                  android:exported="true"
+                  tools:ignore="ExportedContentProvider"/>
 
     </application>
 

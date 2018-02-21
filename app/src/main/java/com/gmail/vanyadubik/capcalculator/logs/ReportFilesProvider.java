@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 public class ReportFilesProvider extends ContentProvider
 {
     // Authority must match AndroidManifest!
-    private static String AUTHORITY   = "com.avatlantik.asmp.filesprovider";
+    private static String AUTHORITY   = "com.gmail.vanyadubik.capcalculator.filesprovider";
 
     private static UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
