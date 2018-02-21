@@ -369,12 +369,12 @@ public class CalcTaxFragment extends Fragment{
         if(selectedtaxSystem == 0) {
             if(selectedGroup ==2) {
                 if(selectedTax == 0) {
-                    taxTaxResult = (incomeAllResult - (incomeAllResult-costsAllResult)/1.2);
+                    taxTaxResult = ((incomeAllResult-costsAllResult)/1.2)*0.2;
                 }
             }
         }else if(selectedtaxSystem == 1) {
             if(selectedTax == 0){
-                taxTaxResult = (incomeAllResult - (incomeAllResult-costsAllResult)/1.2);
+                taxTaxResult = ((incomeAllResult-costsAllResult)/1.2)*0.2;
             }
         }
         if(taxTaxResult < 0.0){
