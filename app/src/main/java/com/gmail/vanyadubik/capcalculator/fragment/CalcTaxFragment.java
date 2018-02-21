@@ -336,6 +336,9 @@ public class CalcTaxFragment extends Fragment{
         }else {
             taxSocResult = minSalary * (taxSocPercent/100);
         }
+        if(taxSocResult < 0.0){
+            taxSocResult =  0.0;
+        }
 
         Double taxIncomeResult = 0.0;
         if(selectedtaxSystem == 1) {
@@ -347,8 +350,8 @@ public class CalcTaxFragment extends Fragment{
         }else if(selectedtaxSystem == 2) {
             taxIncomeResult = ((incomeAllResult-costsAllResult) - taxSocResult)* (taxIncomePercent/100);
         }
-        if(taxSocResult < 0.0){
-            taxSocResult =  0.0;
+        if(taxIncomeResult < 0.0){
+            taxIncomeResult =  0.0;
         }
 
         Double taxMilitaryResult = 0.0;
@@ -404,7 +407,7 @@ public class CalcTaxFragment extends Fragment{
         }
 
         Double taxAllResult = taxSocResult + taxIncomeResult + taxMilitaryResult + taxTaxResult + taxSingleResult;
-        Double taxAllPercentResult = ( taxAllResult * 100 )/ incomeAllResult;
+        Double taxAllPercentResult = incomeAllResult == 0 ? 0.0 : ( taxAllResult * 100 )/ incomeAllResult;
 
         Intent intent = new Intent(getActivity(), ResultActivity.class);
         intent.putExtra(TAX_SYSTEM_RESULT, taxSystem.isShown() ? listTaxSystem.get(selectedtaxSystem) : null);

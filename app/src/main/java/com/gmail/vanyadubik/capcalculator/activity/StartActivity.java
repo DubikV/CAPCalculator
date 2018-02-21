@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gmail.vanyadubik.capcalculator.R;
@@ -39,7 +40,7 @@ public class StartActivity extends AppCompatActivity
     private NavigationView navigationView;
     private FragmentManager mFragmentManager;
     private FragmentTransaction mFragmentTransaction;
-
+    private String description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class StartActivity extends AppCompatActivity
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
         getSupportActionBar().setSubtitle(R.string.action_calc_money);
-
+        description = getResources().getString(R.string.action_calc_money_description);
         initMockData();
 
     }
@@ -124,9 +125,11 @@ public class StartActivity extends AppCompatActivity
         if (id == R.id.nav_calc_money) {
             mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
             getSupportActionBar().setSubtitle(R.string.action_calc_money);
+            description = getResources().getString(R.string.action_calc_money_description);
         } else if (id == R.id.nav_calc_tax) {
             mFragmentTransaction.replace(R.id.containerView, new CalcTaxFragment()).commit();
             getSupportActionBar().setSubtitle(R.string.action_calc_tax);
+            description = getResources().getString(R.string.action_calc_tax_description);
         } else if (id == R.id.nav_setting) {
             startActivity(new Intent(StartActivity.this, SettingsActivity.class));
         } else if (id == R.id.nav_info) {
@@ -178,6 +181,8 @@ public class StartActivity extends AppCompatActivity
                 .setMatchParent(true)
                 .setMarginLeftAndRight(25, 25)
                 .setOutsideColor(StartActivity.this.getResources().getColor(R.color.outside_color_dark_gray));
+        TextView textTitle = (TextView) bubbleMessageView.findViewById(R.id.textTitle);
+        textTitle.setText(description);
         ImageButton closeMessage = (ImageButton) bubbleMessageView.findViewById(R.id.closeMessage);
         closeMessage.setOnClickListener(new View.OnClickListener() {
             @Override

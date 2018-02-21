@@ -23,6 +23,6 @@
     <dimen name="message_activity_text_title">20dp</dimen>
     <dimen name="message_activity_text_message">15dp</dimen>
     <dimen name="message_activity_text_button">15dp</dimen>
-    <dimen name="message_activity_margin">2dp</dimen>
+    <dimen name="message_activity_margin">5dp</dimen>
 
 </resources>

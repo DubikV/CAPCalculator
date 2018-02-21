@@ -97,4 +97,14 @@
     <string name="log_error_name">Звіт про помилку</string>
     <string name="сontact_developer">Зв\'язатися з розробником</string>
 
+    <string name="action_calc_money_description">Нарахування податку на базову суму</string>
+    <string name="action_calc_tax_description">Розрахунок податків з суми прибутку</string>
+    <string name="app_description_1">Калькулятор виконує розрахунки для фізичних осіб підприемців, за умови відсутності працівників.</string>
+    <string name="app_description_2">Нарахування податку ведуться згідно законодавства на 1 січня 2018 року.</string>
+    <string name="app_description_3">Деякі параметри можуть змінюватись протягом року, їх можна змінювати в налаштуваннях.</string>
+    <string name="app_description_4">Ставка єдиного податку визначаеться місцевими радами. За замовчування використовуеться максимальна ставка на 1 січня 2018 року.</string>
+    <string name="app_description_5">Додаток створенный на прикладі "Податкового колькулятору 2017" для IOS</string>
+    <string name="link">посилання</string>
+    <string name="link_tax_calculator">https://apps.sinko.me/uk/apps/taxcalculator/</string>
+
 </resources>

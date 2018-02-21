@@ -1,17 +1,23 @@
 package com.gmail.vanyadubik.capcalculator.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.logs.ReportFilesProvider;
@@ -49,7 +55,7 @@ public class InfoActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear);
         getSupportActionBar().setTitle(R.string.action_info);
 
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.app_description_5);
 
         Button sendMail = (Button) findViewById(R.id.button_mail);
         sendMail.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +111,24 @@ public class InfoActivity extends AppCompatActivity {
 
     private void initData(){
 
-        //textView.setText(String.valueOf(SharedStorage.getDouble(this, PAR_LIVING_MIN, 0.0)));
+        SpannableStringBuilder spanTxt = new SpannableStringBuilder(
+                getResources().getString(R.string.app_description_5)+", ");
+        spanTxt.append(getResources().getString(R.string.link));
+        spanTxt.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                String url = getResources().getString(R.string.link_tax_calculator);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        }, spanTxt.length() - getResources().getString(R.string.link).length(), spanTxt.length(), 0);
+        spanTxt.setSpan(new ForegroundColorSpan(Color.BLACK),
+                spanTxt.length() - getResources().getString(R.string.link).length(),
+                spanTxt.length(), 0);
+        spanTxt.append(".");
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(spanTxt, TextView.BufferType.SPANNABLE);
 
     }
 
