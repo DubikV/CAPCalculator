@@ -27,7 +27,6 @@ import com.gmail.vanyadubik.capcalculator.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ResultActivity extends AppCompatActivity {
@@ -177,8 +176,9 @@ public class ResultActivity extends AppCompatActivity {
             setTextFromExtras(taxAll,  extras, TAX_ALL_RESULT);
 
             Double taxAllPercentRes = extras.getDouble(TAX_ALL_PERCENT_RESULT);
-            String datastring = NumberFormat.getNumberInstance(new Locale("ua", "UA")).format(taxAllPercentRes);
-            taxAllPercent.setText(getResources().getString(R.string.which_is)+" "+datastring+getResources().getString(R.string.of_income));
+            taxAllPercent.setText(getResources().getString(R.string.which_is)+" "+
+                    String.format(new Locale("ua", "UA"), "%.2f %%", taxAllPercentRes)+
+                    getResources().getString(R.string.of_income));
 
             setTextFromExtras(taxSoc,  extras, TAX_SOC_RESULT);
             setTextFromExtras(taxIncome,  extras, TAX_INCOME_RESULT);
@@ -191,9 +191,7 @@ public class ResultActivity extends AppCompatActivity {
     private void setTextFromExtras(TextView textView,  Bundle extras, String nameParam){
         String zeroMoneyString = getResources().getString(R.string.zero_money);
         Double data = extras.getDouble(nameParam);
-
-        String datastring = NumberFormat.getCurrencyInstance(new Locale("ua", "UA")).format(data);
-
+        String datastring = String.format(new Locale("ua", "UA"), "%.2f ₴", data);
         textView.setText(datastring == null || datastring.isEmpty() ? zeroMoneyString : datastring);
 
     }

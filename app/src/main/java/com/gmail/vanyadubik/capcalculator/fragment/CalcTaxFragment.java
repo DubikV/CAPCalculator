@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,10 @@ import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
 import com.gmail.vanyadubik.capcalculator.model.MockData;
 import com.gmail.vanyadubik.capcalculator.utils.ActivityUtils;
 import com.gmail.vanyadubik.capcalculator.utils.LocaleTextWatcher;
+import com.gmail.vanyadubik.capcalculator.utils.SharedStorage;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.GROUP_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.INCOME_ALL_RESULT;
@@ -34,6 +37,15 @@ import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SIN
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SOC_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_SYSTEM_RESULT;
 import static com.gmail.vanyadubik.capcalculator.activity.ResultActivity.TAX_TAX_RESULT;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_FIRST_GR_PERC;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_INCOME_TAX;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_LIVING_MIN;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_MILITARY_PERCENT;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_SALARY_MIN;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_SECOND_GR_PERC;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_SSC_PERCENT;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_THRID_GR_PERC;
+import static com.gmail.vanyadubik.capcalculator.common.Consts.PAR_THRID_GR_PERC_TAX;
 
 public class CalcTaxFragment extends Fragment{
     private static  final int LAYOUT = R.layout.fragment_tax_paiment;
@@ -73,7 +85,62 @@ public class CalcTaxFragment extends Fragment{
         tax = (EditText) view.findViewById(R.id.tax);
         incomeAllTIL = (TextInputLayout) view.findViewById(R.id.income_all_til);
         incomeAll = (EditText) view.findViewById(R.id.income_all);
-        initMoneyTextWather(incomeAll);
+        incomeAll.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+            private boolean isDeleting;
+            protected int max_length = Integer.MAX_VALUE;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if (after <= 0 && count > 0) {
+                    isDeleting = true;
+                } else {
+                    isDeleting = false;
+                }
+                if (!s.toString().equals(current)) {
+                    incomeAll.removeTextChangedListener(this);
+                    String clean_text = s.toString().replaceAll("[^\\d]", "");
+                    incomeAll.setText(clean_text);
+                    incomeAll.addTextChangedListener(this);
+                }
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals(current)) {
+                    incomeAll.removeTextChangedListener(this);
+                    String clean_text = s.toString().replaceAll("[^\\d]", "");
+                    if (isDeleting && s.length() > 0 && !Character.isDigit(s.charAt(s.length() - 1))) {
+                        clean_text = LocaleTextWatcher.deleteLastChar(clean_text);
+                    }
+
+                    double v_value = 0;
+                    if (clean_text != null && clean_text.length() > 0) {
+                        v_value = Double.parseDouble(clean_text);
+
+                        String s_value = Double.toString(Math.abs(v_value / 100));
+                        int integerPlaces = s_value.indexOf('.');
+                        if (integerPlaces > max_length) {
+                            v_value = Double.parseDouble(LocaleTextWatcher.deleteLastChar(clean_text));
+                        }
+                    }
+
+                    String formatted_text = String.format(new Locale("ua", "UA"), "%.2f ₴", v_value / 100);
+
+                    current = formatted_text;
+                    incomeAll.setText(formatted_text);
+                    incomeAll.setSelection(formatted_text.length());
+                    incomeAll.addTextChangedListener(this);
+                }
+
+                incomeWithoutTax.setText(String.format("%.2f", getDoubleFromString(incomeAll.getText()) / 1.2));
+            }
+        });
         incomeWithoutTaxTIL = (TextInputLayout) view.findViewById(R.id.income_without_tax_til);
         incomeWithoutTax = (EditText) view.findViewById(R.id.income_without_tax);
         initMoneyTextWather(incomeWithoutTax);
@@ -223,6 +290,7 @@ public class CalcTaxFragment extends Fragment{
                 if(selectedtaxSystem!=0) {
                     costsAllTIL.setHint(getActivity().getResources().getString(R.string.costs_amount));
                 }
+                incomeWithoutTax.setText(String.format("%.2f", getDoubleFromString(incomeAll.getText()) / 1.2));
                 return;
             case 1:
                 incomeAllTIL.setHint(getActivity().getResources().getString(R.string.income_amount));
@@ -240,18 +308,116 @@ public class CalcTaxFragment extends Fragment{
 
     private void calcResult(){
 
+        Double incomeAllResult = getDoubleFromString(incomeAll.getText());
+
+        Double costsAllResult = getDoubleFromString(costsAll.getText());
+        Double costsWithoutTaxResult = getDoubleFromString(costsWithoutTax.getText());
+
+        Double minSalary = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0);
+        Double taxSocPercent = SharedStorage.getDouble(getActivity(), PAR_SSC_PERCENT, 0.0);
+        Double taxIncomePercent = SharedStorage.getDouble(getActivity(), PAR_INCOME_TAX, 0.0);
+        Double taxMilitaryPercent = SharedStorage.getDouble(getActivity(), PAR_MILITARY_PERCENT, 0.0);
+
+        Double taxSocResult = 0.0;
+        if(selectedtaxSystem == 1) {
+            if(selectedTax == 0){
+                taxSocResult = (((incomeAllResult-costsAllResult)/1.2)  - costsWithoutTaxResult) * (taxSocPercent/100);
+                if(taxSocResult < ( minSalary * (taxSocPercent/100))){
+                    taxSocResult = minSalary * (taxSocPercent/100);
+                }
+            }else{
+                taxSocResult = (incomeAllResult-costsAllResult) * (taxSocPercent/100);
+                if(taxSocResult < ( minSalary * (taxSocPercent/100))){
+                    taxSocResult = minSalary * (taxSocPercent/100);
+                }
+            }
+        }else if(selectedtaxSystem == 2) {
+            taxSocResult = (incomeAllResult-costsAllResult) * (taxSocPercent/100);
+        }else {
+            taxSocResult = minSalary * (taxSocPercent/100);
+        }
+
+        Double taxIncomeResult = 0.0;
+        if(selectedtaxSystem == 1) {
+            if(selectedTax == 0){
+                taxIncomeResult = (((incomeAllResult-costsAllResult)/1.2)  - costsWithoutTaxResult - taxSocResult)* (taxIncomePercent/100);
+            }else{
+                taxIncomeResult = ((incomeAllResult-costsAllResult) - taxSocResult)* (taxIncomePercent/100);
+            }
+        }else if(selectedtaxSystem == 2) {
+            taxIncomeResult = ((incomeAllResult-costsAllResult) - taxSocResult)* (taxIncomePercent/100);
+        }
+        if(taxSocResult < 0.0){
+            taxSocResult =  0.0;
+        }
+
+        Double taxMilitaryResult = 0.0;
+        if(selectedtaxSystem == 1) {
+            if(selectedTax == 0){
+                taxMilitaryResult = (((incomeAllResult-costsAllResult)/1.2)  - costsWithoutTaxResult - taxSocResult)* (taxMilitaryPercent/100);
+            }else{
+                taxMilitaryResult = ((incomeAllResult-costsAllResult) - taxSocResult)* (taxMilitaryPercent/100);
+            }
+        }else if(selectedtaxSystem == 2) {
+            taxMilitaryResult = ((incomeAllResult-costsAllResult) - taxSocResult)* (taxMilitaryPercent/100);
+        }
+        if(taxMilitaryResult < 0.0){
+            taxMilitaryResult =  0.0;
+        }
+
+        Double taxTaxResult = 0.0;
+        if(selectedtaxSystem == 0) {
+            if(selectedGroup ==2) {
+                if(selectedTax == 0) {
+                    taxTaxResult = (incomeAllResult - (incomeAllResult-costsAllResult)/1.2);
+                }
+            }
+        }else if(selectedtaxSystem == 1) {
+            if(selectedTax == 0){
+                taxTaxResult = (incomeAllResult - (incomeAllResult-costsAllResult)/1.2);
+            }
+        }
+        if(taxTaxResult < 0.0){
+            taxTaxResult =  0.0;
+        }
+
+        Double taxSingleResult = 0.0;
+        if(selectedtaxSystem == 0) {
+            if(selectedGroup ==0) {
+                taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_LIVING_MIN, 0.0)
+                                  * (SharedStorage.getDouble(getActivity(), PAR_FIRST_GR_PERC, 0.0)/100);
+            }else if(selectedGroup ==1) {
+                taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0)
+                        * (SharedStorage.getDouble(getActivity(), PAR_SECOND_GR_PERC, 0.0)/100);
+            }else if(selectedGroup ==2) {
+                if(selectedTax == 0) {
+                    taxSingleResult = incomeAllResult
+                            * (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC_TAX, 0.0)/100);
+                }else{
+                    taxSingleResult = incomeAllResult
+                            * (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC, 0.0)/100);
+                }
+            }
+        }
+        if(taxSingleResult < 0.0){
+            taxSingleResult =  0.0;
+        }
+
+        Double taxAllResult = taxSocResult + taxIncomeResult + taxMilitaryResult + taxTaxResult + taxSingleResult;
+        Double taxAllPercentResult = ( taxAllResult * 100 )/ incomeAllResult;
+
         Intent intent = new Intent(getActivity(), ResultActivity.class);
         intent.putExtra(TAX_SYSTEM_RESULT, taxSystem.isShown() ? listTaxSystem.get(selectedtaxSystem) : null);
         intent.putExtra(GROUP_RESULT, group.isShown() ? listGroup.get(selectedGroup) : null);
         intent.putExtra(TAX_RESULT, tax.isShown() ? listTax.get(selectedTax) : null);
-        intent.putExtra(INCOME_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_ALL_PERCENT_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_SOC_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_INCOME_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_MILITARY_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_TAX_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_SINGLE_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(INCOME_ALL_RESULT, incomeAllResult);
+        intent.putExtra(TAX_ALL_RESULT, taxAllResult);
+        intent.putExtra(TAX_ALL_PERCENT_RESULT, taxAllPercentResult);
+        intent.putExtra(TAX_SOC_RESULT, taxSocResult);
+        intent.putExtra(TAX_INCOME_RESULT, taxIncomeResult);
+        intent.putExtra(TAX_MILITARY_RESULT, taxMilitaryResult);
+        intent.putExtra(TAX_TAX_RESULT, taxTaxResult);
+        intent.putExtra(TAX_SINGLE_RESULT, taxSingleResult);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 

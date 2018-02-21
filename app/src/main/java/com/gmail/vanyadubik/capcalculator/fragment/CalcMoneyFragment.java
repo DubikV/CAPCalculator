@@ -215,18 +215,30 @@ public class CalcMoneyFragment extends Fragment{
 
     private void calcResult(){
 
+
+        Double incomeAllResult = getDoubleFromString(incomeAll.getText());
+
+        Double taxSocResult = 0.0;
+        Double taxIncomeResult = 0.0;
+        Double taxMilitaryResult = 0.0;
+        Double taxTaxResult = 0.0;
+        Double taxSingleResult = 0.0;
+
+        Double taxAllResult = taxSocResult + taxIncomeResult + taxMilitaryResult + taxTaxResult + taxSingleResult;
+        Double taxAllPercentResult = ( taxAllResult * 100 )/ incomeAllResult;
+
         Intent intent = new Intent(getActivity(), ResultActivity.class);
         intent.putExtra(TAX_SYSTEM_RESULT, taxSystem.isShown() ? listTaxSystem.get(selectedtaxSystem) : null);
         intent.putExtra(GROUP_RESULT, group.isShown() ? listGroup.get(selectedGroup) : null);
         intent.putExtra(TAX_RESULT, tax.isShown() ? listTax.get(selectedTax) : null);
-        intent.putExtra(INCOME_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_ALL_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_ALL_PERCENT_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_SOC_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_INCOME_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_MILITARY_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_TAX_RESULT, getDoubleFromString(incomeAll.getText()));
-        intent.putExtra(TAX_SINGLE_RESULT, getDoubleFromString(incomeAll.getText()));
+        intent.putExtra(INCOME_ALL_RESULT, incomeAllResult);
+        intent.putExtra(TAX_ALL_RESULT, taxAllResult);
+        intent.putExtra(TAX_ALL_PERCENT_RESULT, taxAllPercentResult);
+        intent.putExtra(TAX_SOC_RESULT, taxSocResult);
+        intent.putExtra(TAX_INCOME_RESULT, taxIncomeResult);
+        intent.putExtra(TAX_MILITARY_RESULT, taxMilitaryResult);
+        intent.putExtra(TAX_TAX_RESULT, taxTaxResult);
+        intent.putExtra(TAX_SINGLE_RESULT, taxSingleResult);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 

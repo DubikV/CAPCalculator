@@ -7,7 +7,6 @@ import android.widget.EditText;
 import java.util.Locale;
 
 public class LocaleTextWatcher implements TextWatcher {
-    public static final String T = "PayTextWatcher";
 
     private final EditText editText;
     private String formatType;
@@ -65,11 +64,6 @@ public class LocaleTextWatcher implements TextWatcher {
                 }
             }
 
-//            String stringValue = String.valueOf(v_value);
-//            stringValue = stringValue.replace(".","_");
-//            String[] subStr = stringValue.split("_");
-//            int detimeter = subStr[1].length() ==1 ? 10 : 100;
-
             String formatted_text = String.format(new Locale("ua", "UA"), formatType, v_value / 100);
 
             current = formatted_text;
@@ -81,7 +75,7 @@ public class LocaleTextWatcher implements TextWatcher {
     }
 
 
-    private String deleteLastChar(String clean_text) {
+    public static String deleteLastChar(String clean_text) {
         if (clean_text.length() > 0) {
             clean_text = clean_text.substring(0, clean_text.length()-1);
         } else {

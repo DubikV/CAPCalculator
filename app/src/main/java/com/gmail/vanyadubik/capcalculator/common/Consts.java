@@ -31,8 +31,8 @@ public class Consts {
 
     public final static Double FIRST_GR_PERC = 10.0;
     public final static Double SECOND_GR_PERC = 20.0;
-    public final static Double THRID_GR_PERC = 3.0;
-    public final static Double THRID_GR_PERC_TAX = 5.0;
+    public final static Double THRID_GR_PERC_TAX = 3.0;
+    public final static Double THRID_GR_PERC = 5.0;
 
     public final static Double SSC_PERCENT = 22.0;
 

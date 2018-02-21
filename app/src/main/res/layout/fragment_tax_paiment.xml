@@ -187,11 +187,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/income_without_tax"
+                            android:focusable="false"
                             android:maxLines="1"
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
-                            android:inputType="numberDecimal"
-                            app:drawableRightCompat="@drawable/ic_keyboard"/>
+                            android:inputType="numberDecimal"/>
 
                     </android.support.design.widget.TextInputLayout>
 
