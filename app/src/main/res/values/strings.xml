@@ -1,14 +1,14 @@
 <resources>
-    <string name="app_name">ФОП Калькулятор</string>
+
+    <string name="app_name">ФОП податки</string>
+    <string name="app_name_title">ФОП калькулятор</string>
+    <string name="app_name_full">Калькулятор податків для ФОП</string>
     <string name="dev_mail">vanyadubik@gmail.com</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-
-    <string name="action_calc_money">Розрахунок суми виплати</string>
-    <string name="action_calc_tax">Розрахунок податків від суми</string>
-    <string name="action_calc_money_short">Розрахунок суми</string>
+    <string name="action_calc_money_short">Нарахування податків</string>
     <string name="action_calc_tax_short">Розрахунок податків</string>
     <string name="other">Інше</string>
     <string name="action_settings">Налаштування</string>
@@ -23,10 +23,12 @@
     <string name="group">Группа</string>
     <string name="tax">ПДВ</string>
 
+
     <string name="income">Дохід</string>
 
     <string name="all_tax">Всього податків</string>
     <string name="income_amount">Сума доходу</string>
+    <string name="income_amount_base">Сума бази</string>
 
     <string name="income_with_tax">Дохід з ПДВ</string>
     <string name="income_without_tax">Дохід без ПДВ</string>
@@ -71,6 +73,7 @@
     <string name="questions_answer_no">Ні</string>
     <string name="questions_answer_cancel">Відмінити</string>
     <string name="questions_answer_ok">Ок</string>
+    <string name="error_field_required">Це поле є обов\'язковим</string>
 
     <string name="tax_system_1">Спрощена</string>
     <string name="tax_system_2">Загальна</string>
@@ -100,7 +103,7 @@
     <string name="action_calc_money_description">Нарахування податку на базову суму</string>
     <string name="action_calc_tax_description">Розрахунок податків з суми прибутку</string>
     <string name="app_description_1">Калькулятор виконує розрахунки для фізичних осіб підприемців, за умови відсутності працівників.</string>
-    <string name="app_description_2">Нарахування податку ведуться згідно законодавства на 1 січня 2018 року.</string>
+    <string name="app_description_2">Нарахування податків ведуться згідно законодавства на 1 січня 2018 року.</string>
     <string name="app_description_3">Деякі параметри можуть змінюватись протягом року, їх можна змінювати в налаштуваннях.</string>
     <string name="app_description_4">Ставка єдиного податку визначаеться місцевими радами. За замовчування використовуеться максимальна ставка на 1 січня 2018 року.</string>
     <string name="app_description_5">Додаток створенный на прикладі "Податкового колькулятору 2017" для IOS</string>

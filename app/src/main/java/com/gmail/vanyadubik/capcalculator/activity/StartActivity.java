@@ -47,6 +47,7 @@ public class StartActivity extends AppCompatActivity
         setContentView(R.layout.activity_start);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.app_name_title));
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -63,7 +64,7 @@ public class StartActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
         mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
-        getSupportActionBar().setSubtitle(R.string.action_calc_money);
+        getSupportActionBar().setSubtitle(R.string.action_calc_money_short);
         description = getResources().getString(R.string.action_calc_money_description);
         initMockData();
 
@@ -107,9 +108,6 @@ public class StartActivity extends AppCompatActivity
             showBubbleMessage();
             return true;
         }
-        if (id == R.id.action_save) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -124,11 +122,11 @@ public class StartActivity extends AppCompatActivity
 
         if (id == R.id.nav_calc_money) {
             mFragmentTransaction.replace(R.id.containerView, new CalcMoneyFragment()).commit();
-            getSupportActionBar().setSubtitle(R.string.action_calc_money);
+            getSupportActionBar().setSubtitle(R.string.action_calc_money_short);
             description = getResources().getString(R.string.action_calc_money_description);
         } else if (id == R.id.nav_calc_tax) {
             mFragmentTransaction.replace(R.id.containerView, new CalcTaxFragment()).commit();
-            getSupportActionBar().setSubtitle(R.string.action_calc_tax);
+            getSupportActionBar().setSubtitle(R.string.action_calc_tax_short);
             description = getResources().getString(R.string.action_calc_tax_description);
         } else if (id == R.id.nav_setting) {
             startActivity(new Intent(StartActivity.this, SettingsActivity.class));

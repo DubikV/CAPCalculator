@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +34,11 @@ public class ResultActivity extends AppCompatActivity {
 
     private static final String NAME_SCREENSCHOT_FILE = "tax_result_screenshot.jpeg";
 
+    public static final String CALC_MONEY = "calc_money";
     public static final String TAX_SYSTEM_RESULT = "tax_system";
     public static final String GROUP_RESULT = "group";
     public static final String TAX_RESULT = "tax";
+    public static final String INCOME_BASE_ALL_RESULT = "income_base_all";
     public static final String INCOME_ALL_RESULT = "income_all";
     public static final String TAX_ALL_RESULT = "tax_all";
     public static final String TAX_ALL_PERCENT_RESULT = "tax_all_percent";
@@ -44,6 +47,7 @@ public class ResultActivity extends AppCompatActivity {
     public static final String TAX_MILITARY_RESULT = "tax_military";
     public static final String TAX_TAX_RESULT = "tax_tax";
     public static final String TAX_SINGLE_RESULT = "tax_single";
+    public static final String COSTS_ADD_RESULT = "costs_add_result";
 
     private int height, width;
     private Button nextButton;
@@ -51,8 +55,9 @@ public class ResultActivity extends AppCompatActivity {
     private int duration = 300;
     private Transition sharedElementEnterTransition;
     private Transition.TransitionListener mTransitionListener;
-    private TextView taxSystem, group, tax, incomeAll, taxAll, taxAllPercent,
+    private TextView taxSystem, group, tax, incomeBaseAll, incomeAddCosts, incomeAll, taxAll, taxAllPercent,
             taxSoc, taxIncome, taxMilitary, taxTax, taxSingle;
+    private LinearLayout incomeBaseAllLL;
     private View container;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -70,6 +75,9 @@ public class ResultActivity extends AppCompatActivity {
         taxSystem = (TextView) findViewById(R.id.tax_system);
         group = (TextView) findViewById(R.id.group);
         tax = (TextView) findViewById(R.id.tax);
+        incomeBaseAllLL = (LinearLayout) findViewById(R.id.income_base_all_ll);
+        incomeBaseAll = (TextView) findViewById(R.id.income_base_all);
+        incomeAddCosts = (TextView) findViewById(R.id.income_add_costs);
         incomeAll = (TextView) findViewById(R.id.income_all);
         taxAll = (TextView) findViewById(R.id.tax_all);
         taxAllPercent = (TextView) findViewById(R.id.tax_all_percent);
@@ -130,7 +138,6 @@ public class ResultActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
 
         if(id == R.id.action_share_result){
@@ -172,6 +179,10 @@ public class ResultActivity extends AppCompatActivity {
             String taxRes = extras.getString(TAX_RESULT);
             tax.setText(taxRes == null || taxRes.isEmpty() ? "--" : taxRes);
 
+            incomeBaseAllLL.setVisibility(extras.getBoolean(CALC_MONEY) ? View.VISIBLE : View.GONE);
+
+            setTextFromExtras(incomeBaseAll,  extras, INCOME_BASE_ALL_RESULT);
+            setTextFromExtras(incomeAddCosts,  extras, COSTS_ADD_RESULT);
             setTextFromExtras(incomeAll,  extras, INCOME_ALL_RESULT);
             setTextFromExtras(taxAll,  extras, TAX_ALL_RESULT);
 

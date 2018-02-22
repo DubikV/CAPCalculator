@@ -164,7 +164,7 @@
                             android:id="@+id/income_all"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/income_amount"
+                            android:hint="@string/income_amount_base"
                             android:maxLines="1"
                             android:textSize="@dimen/text_size_standart"
                             android:textColor ="@color/colorAccent"
