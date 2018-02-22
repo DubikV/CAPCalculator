@@ -101,6 +101,8 @@ public class CalcMoneyFragment extends Fragment{
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 costsAddPercentTIL.setVisibility(usingAddCosts.isChecked() ? View.VISIBLE : View.GONE);
                 costsAddTIL.setVisibility(usingAddCosts.isChecked() ? View.VISIBLE : View.GONE);
+                costsAddPercent.setText("0,00");
+                costsAdd.setText("0,00");
             }
         });
         initMoneyTextWather(costsAdd);

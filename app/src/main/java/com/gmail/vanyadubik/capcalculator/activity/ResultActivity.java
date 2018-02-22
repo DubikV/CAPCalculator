@@ -5,12 +5,14 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
@@ -58,7 +60,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView taxSystem, group, tax, incomeBaseAll, incomeAddCosts, incomeAll, taxAll, taxAllPercent,
             taxSoc, taxIncome, taxMilitary, taxTax, taxSingle;
     private LinearLayout incomeBaseAllLL;
-    private View container;
+    private NestedScrollView container;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -71,7 +73,7 @@ public class ResultActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear);
         getSupportActionBar().setTitle(R.string.result_calс);
 
-        container = (View) findViewById(R.id.container);
+        container = (NestedScrollView) findViewById(R.id.container);
         taxSystem = (TextView) findViewById(R.id.tax_system);
         group = (TextView) findViewById(R.id.group);
         tax = (TextView) findViewById(R.id.tax);
@@ -102,6 +104,7 @@ public class ResultActivity extends AppCompatActivity {
             mTransitionListener = new Transition.TransitionListener() {
                 @Override
                 public void onTransitionStart(Transition transition) {}
+                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
                 @Override
                 public void onTransitionEnd(Transition transition) {
                     setAnim(mConstraintLayout, true);
@@ -166,6 +169,8 @@ public class ResultActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        nextButton.setVisibility(View.GONE);
+        mConstraintLayout.setVisibility(View.VISIBLE);
 
         Bundle extras = getIntent().getExtras();
 
@@ -196,6 +201,8 @@ public class ResultActivity extends AppCompatActivity {
             setTextFromExtras(taxMilitary,  extras, TAX_MILITARY_RESULT);
             setTextFromExtras(taxTax,  extras, TAX_TAX_RESULT);
             setTextFromExtras(taxSingle,  extras, TAX_SINGLE_RESULT);
+        }else{
+            return;
         }
     }
 
@@ -293,11 +300,19 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    public static Bitmap getScreenShot(View view) {
-        View screenView = view.getRootView();
-        screenView.setDrawingCacheEnabled(true);
-        Bitmap bitmap = Bitmap.createBitmap(screenView.getDrawingCache());
-        screenView.setDrawingCacheEnabled(false);
+    public static Bitmap getScreenShot(NestedScrollView scrollView) {
+        int h = 0;
+        Bitmap bitmap = null;
+
+        for (int i = 0; i < scrollView.getChildCount(); i++) {
+            h += scrollView.getChildAt(i).getHeight();
+            scrollView.getChildAt(i).setBackgroundResource(R.color.colorWhite);
+        }
+        bitmap = Bitmap.createBitmap(scrollView.getWidth(), h,
+                Bitmap.Config.ARGB_8888);
+        final Canvas canvas = new Canvas(bitmap);
+        scrollView.draw(canvas);
+
         return bitmap;
     }
 
