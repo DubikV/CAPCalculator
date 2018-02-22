@@ -261,37 +261,28 @@ public class CalcMoneyFragment extends Fragment{
             Double taxIncomePercent = SharedStorage.getDouble(getActivity(), PAR_INCOME_TAX, 0.0);
             Double taxMilitaryPercent = SharedStorage.getDouble(getActivity(), PAR_MILITARY_PERCENT, 0.0);
 
-            Double taxSocResult = 0.0;
+
+            Double sumWithoutSoc = 0.0;
             if (selectedtaxSystem == 1) {
                 if (selectedTax == 0) {
-                    taxSocResult = incomeBaseAllResult * (taxSocPercent / 100);
-                    if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
-                        taxSocResult = minSalary * (taxSocPercent / 100);
-                    }
+                    sumWithoutSoc = incomeBaseAllResult / ( 1 - ((taxIncomePercent / 100)+(taxMilitaryPercent / 100)));
                 } else {
-                    taxSocResult = incomeBaseAllResult * (taxSocPercent / 100);
-                    if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
-                        taxSocResult = minSalary * (taxSocPercent / 100);
-                    }
+                    sumWithoutSoc = incomeBaseAllResult / ( 1 - ((taxIncomePercent / 100)+(taxMilitaryPercent / 100)));
                 }
             } else if (selectedtaxSystem == 2) {
-                taxSocResult = incomeBaseAllResult * (taxSocPercent / 100);
-            } else {
-                taxSocResult = minSalary * (taxSocPercent / 100);
+                sumWithoutSoc = incomeBaseAllResult / ( 1 - ((taxIncomePercent / 100)+(taxMilitaryPercent / 100)));
             }
-            if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
-                taxSocResult = minSalary * (taxSocPercent / 100);
-            }
+
 
             Double taxIncomeResult = 0.0;
             if (selectedtaxSystem == 1) {
                 if (selectedTax == 0) {
-                    taxIncomeResult = incomeBaseAllResult * (taxIncomePercent / 100);
+                    taxIncomeResult = sumWithoutSoc * (taxIncomePercent / 100);
                 } else {
-                    taxIncomeResult = incomeBaseAllResult * (taxIncomePercent / 100);
+                    taxIncomeResult = sumWithoutSoc * (taxIncomePercent / 100);
                 }
             } else if (selectedtaxSystem == 2) {
-                taxIncomeResult = incomeBaseAllResult * (taxIncomePercent / 100);
+                taxIncomeResult = sumWithoutSoc * (taxIncomePercent / 100);
             }
             if (taxIncomeResult < 0.0) {
                 taxIncomeResult = 0.0;
@@ -300,27 +291,49 @@ public class CalcMoneyFragment extends Fragment{
             Double taxMilitaryResult = 0.0;
             if (selectedtaxSystem == 1) {
                 if (selectedTax == 0) {
-                    taxMilitaryResult = incomeBaseAllResult * (taxMilitaryPercent / 100);
+                    taxMilitaryResult = sumWithoutSoc * (taxMilitaryPercent / 100);
                 } else {
-                    taxMilitaryResult = incomeBaseAllResult * (taxMilitaryPercent / 100);
+                    taxMilitaryResult = sumWithoutSoc * (taxMilitaryPercent / 100);
                 }
             } else if (selectedtaxSystem == 2) {
-                taxMilitaryResult = incomeBaseAllResult * (taxMilitaryPercent / 100);
+                taxMilitaryResult = sumWithoutSoc * (taxMilitaryPercent / 100);
             }
             if (taxMilitaryResult < 0.0) {
                 taxMilitaryResult = 0.0;
+            }
+
+            Double taxSocResult = 0.0;
+            if (selectedtaxSystem == 1) {
+                if (selectedTax == 0) {
+                    taxSocResult = (sumWithoutSoc /(1- (taxSocPercent / 100)))-sumWithoutSoc;
+                    if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
+                        taxSocResult = minSalary * (taxSocPercent / 100);
+                    }
+                } else {
+                    taxSocResult = (sumWithoutSoc /(1- (taxSocPercent / 100)))-sumWithoutSoc;
+                    if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
+                        taxSocResult = minSalary * (taxSocPercent / 100);
+                    }
+                }
+            } else if (selectedtaxSystem == 2) {
+                taxSocResult = (sumWithoutSoc /(1- (taxSocPercent / 100)))-sumWithoutSoc;
+            } else {
+                taxSocResult = minSalary * (taxSocPercent / 100);
+            }
+            if (taxSocResult < (minSalary * (taxSocPercent / 100))) {
+                taxSocResult = minSalary * (taxSocPercent / 100);
             }
 
             Double taxTaxResult = 0.0;
             if (selectedtaxSystem == 0) {
                 if (selectedGroup == 2) {
                     if (selectedTax == 0) {
-                        taxTaxResult = (incomeBaseAllResult / 1.2) * 0.2;
+                        taxTaxResult = (taxSocResult + sumWithoutSoc)* 0.2;
                     }
                 }
             } else if (selectedtaxSystem == 1) {
                 if (selectedTax == 0) {
-                    taxTaxResult = (incomeBaseAllResult / 1.2) * 0.2;
+                    taxTaxResult = (taxSocResult + sumWithoutSoc) * 0.2;
                 }
             }
             if (taxTaxResult < 0.0) {
