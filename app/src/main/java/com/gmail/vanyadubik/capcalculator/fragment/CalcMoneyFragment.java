@@ -256,10 +256,15 @@ public class CalcMoneyFragment extends Fragment{
 
             Double incomeBaseAllResult  = incomeBaseAll + costsAddResult;
 
+            Double livinMin = SharedStorage.getDouble(getActivity(), PAR_LIVING_MIN, 0.0);
             Double minSalary = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0);
             Double taxSocPercent = SharedStorage.getDouble(getActivity(), PAR_SSC_PERCENT, 0.0);
             Double taxIncomePercent = SharedStorage.getDouble(getActivity(), PAR_INCOME_TAX, 0.0);
             Double taxMilitaryPercent = SharedStorage.getDouble(getActivity(), PAR_MILITARY_PERCENT, 0.0);
+            Double firstGrPerc = (SharedStorage.getDouble(getActivity(), PAR_FIRST_GR_PERC, 0.0) / 100);
+            Double secondGrPerc = (SharedStorage.getDouble(getActivity(), PAR_SECOND_GR_PERC, 0.0) / 100);
+            Double thirdGrTaxPerc = SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC_TAX, 0.0);
+            Double thirdGrPerc = SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC, 0.0);
 
 
             Double sumWithoutSoc = 0.0;
@@ -324,11 +329,31 @@ public class CalcMoneyFragment extends Fragment{
                 taxSocResult = minSalary * (taxSocPercent / 100);
             }
 
+            Double taxSingleResult = 0.0;
+            if (selectedtaxSystem == 0) {
+                if (selectedGroup == 0) {
+                    taxSingleResult = livinMin * (firstGrPerc / 100);
+                } else if (selectedGroup == 1) {
+                    taxSingleResult = minSalary * (secondGrPerc / 100);
+                } else if (selectedGroup == 2) {
+                    if (selectedTax == 0) {
+                        taxSingleResult = ((incomeBaseAllResult + taxSocResult) /(1 - ( thirdGrTaxPerc/ 100)))
+                                                               - (incomeBaseAllResult + taxSocResult);
+                    } else {
+                        taxSingleResult = ((incomeBaseAllResult + taxSocResult) /(1 - ( thirdGrPerc / 100)))
+                                                               - (incomeBaseAllResult + taxSocResult);
+                    }
+                }
+            }
+            if (taxSingleResult < 0.0) {
+                taxSingleResult = 0.0;
+            }
+
             Double taxTaxResult = 0.0;
             if (selectedtaxSystem == 0) {
                 if (selectedGroup == 2) {
                     if (selectedTax == 0) {
-                        taxTaxResult = (taxSocResult + sumWithoutSoc)* 0.2;
+                        taxTaxResult = (taxSocResult + incomeBaseAllResult)* 0.2;
                     }
                 }
             } else if (selectedtaxSystem == 1) {
@@ -338,30 +363,6 @@ public class CalcMoneyFragment extends Fragment{
             }
             if (taxTaxResult < 0.0) {
                 taxTaxResult = 0.0;
-            }
-
-            Double taxSingleResult = 0.0;
-            if (selectedtaxSystem == 0) {
-                if (selectedGroup == 0) {
-                    taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_LIVING_MIN, 0.0)
-                            * (SharedStorage.getDouble(getActivity(), PAR_FIRST_GR_PERC, 0.0) / 100);
-                } else if (selectedGroup == 1) {
-                    taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0)
-                            * (SharedStorage.getDouble(getActivity(), PAR_SECOND_GR_PERC, 0.0) / 100);
-                } else if (selectedGroup == 2) {
-                    if (selectedTax == 0) {
-                        taxSingleResult = ((incomeBaseAllResult + taxSocResult)
-                                /(1 - (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC_TAX, 0.0) / 100)))
-                                - (incomeBaseAllResult + taxSocResult);
-                    } else {
-                        taxSingleResult = ((incomeBaseAllResult + taxSocResult)
-                                /(1 - (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC, 0.0) / 100)))
-                                - (incomeBaseAllResult + taxSocResult);
-                    }
-                }
-            }
-            if (taxSingleResult < 0.0) {
-                taxSingleResult = 0.0;
             }
 
             Double taxAllResult = taxSocResult + taxIncomeResult + taxMilitaryResult + taxTaxResult + taxSingleResult;

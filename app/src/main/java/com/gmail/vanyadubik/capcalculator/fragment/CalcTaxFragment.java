@@ -331,10 +331,15 @@ public class CalcTaxFragment extends Fragment{
             Double costsAllResult = getDoubleFromString(costsAll.getText());
             Double costsWithoutTaxResult = getDoubleFromString(costsWithoutTax.getText());
 
+            Double livinMin = SharedStorage.getDouble(getActivity(), PAR_LIVING_MIN, 0.0);
             Double minSalary = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0);
             Double taxSocPercent = SharedStorage.getDouble(getActivity(), PAR_SSC_PERCENT, 0.0);
             Double taxIncomePercent = SharedStorage.getDouble(getActivity(), PAR_INCOME_TAX, 0.0);
             Double taxMilitaryPercent = SharedStorage.getDouble(getActivity(), PAR_MILITARY_PERCENT, 0.0);
+            Double firstGrPerc = (SharedStorage.getDouble(getActivity(), PAR_FIRST_GR_PERC, 0.0) / 100);
+            Double secondGrPerc = (SharedStorage.getDouble(getActivity(), PAR_SECOND_GR_PERC, 0.0) / 100);
+            Double thirdGrTaxPerc = SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC_TAX, 0.0);
+            Double thirdGrPerc = SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC, 0.0);
 
             Double taxSocResult = 0.0;
             if (selectedtaxSystem == 1) {
@@ -408,18 +413,14 @@ public class CalcTaxFragment extends Fragment{
             Double taxSingleResult = 0.0;
             if (selectedtaxSystem == 0) {
                 if (selectedGroup == 0) {
-                    taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_LIVING_MIN, 0.0)
-                            * (SharedStorage.getDouble(getActivity(), PAR_FIRST_GR_PERC, 0.0) / 100);
+                    taxSingleResult = livinMin * (firstGrPerc / 100);
                 } else if (selectedGroup == 1) {
-                    taxSingleResult = SharedStorage.getDouble(getActivity(), PAR_SALARY_MIN, 0.0)
-                            * (SharedStorage.getDouble(getActivity(), PAR_SECOND_GR_PERC, 0.0) / 100);
+                    taxSingleResult = minSalary * (secondGrPerc / 100);
                 } else if (selectedGroup == 2) {
                     if (selectedTax == 0) {
-                        taxSingleResult = incomeAllResult
-                                * (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC_TAX, 0.0) / 100);
+                        taxSingleResult = incomeAllResult * (thirdGrTaxPerc / 100);
                     } else {
-                        taxSingleResult = incomeAllResult
-                                * (SharedStorage.getDouble(getActivity(), PAR_THRID_GR_PERC, 0.0) / 100);
+                        taxSingleResult = incomeAllResult * (thirdGrPerc / 100);
                     }
                 }
             }
