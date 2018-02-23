@@ -329,31 +329,14 @@ public class CalcMoneyFragment extends Fragment{
                 taxSocResult = minSalary * (taxSocPercent / 100);
             }
 
-            Double taxSingleResult = 0.0;
-            if (selectedtaxSystem == 0) {
-                if (selectedGroup == 0) {
-                    taxSingleResult = livinMin * (firstGrPerc / 100);
-                } else if (selectedGroup == 1) {
-                    taxSingleResult = minSalary * (secondGrPerc / 100);
-                } else if (selectedGroup == 2) {
-                    if (selectedTax == 0) {
-                        taxSingleResult = ((incomeBaseAllResult + taxSocResult) /(1 - ( thirdGrTaxPerc/ 100)))
-                                                               - (incomeBaseAllResult + taxSocResult);
-                    } else {
-                        taxSingleResult = ((incomeBaseAllResult + taxSocResult) /(1 - ( thirdGrPerc / 100)))
-                                                               - (incomeBaseAllResult + taxSocResult);
-                    }
-                }
-            }
-            if (taxSingleResult < 0.0) {
-                taxSingleResult = 0.0;
-            }
-
             Double taxTaxResult = 0.0;
             if (selectedtaxSystem == 0) {
                 if (selectedGroup == 2) {
                     if (selectedTax == 0) {
-                        taxTaxResult = (taxSocResult + incomeBaseAllResult)* 0.2;
+                        taxTaxResult =
+                                ((taxSocResult + incomeBaseAllResult) /
+                                        (1- (1.0/6.0) - (thirdGrTaxPerc/ 100)))
+                                            /6;
                     }
                 }
             } else if (selectedtaxSystem == 1) {
@@ -363,6 +346,25 @@ public class CalcMoneyFragment extends Fragment{
             }
             if (taxTaxResult < 0.0) {
                 taxTaxResult = 0.0;
+            }
+
+            Double taxSingleResult = 0.0;
+            if (selectedtaxSystem == 0) {
+                if (selectedGroup == 0) {
+                    taxSingleResult = livinMin * (firstGrPerc / 100);
+                } else if (selectedGroup == 1) {
+                    taxSingleResult = minSalary * (secondGrPerc / 100);
+                } else if (selectedGroup == 2) {
+                    if (selectedTax == 0) {
+                        taxSingleResult = ((taxSocResult + incomeBaseAllResult) / (1- (1.0/6.0) - (thirdGrTaxPerc/ 100))) * ( thirdGrTaxPerc/ 100);
+                    } else {
+                        taxSingleResult = ((incomeBaseAllResult + taxSocResult) /(1 - ( thirdGrPerc / 100)))
+                                                               - (incomeBaseAllResult + taxSocResult);
+                    }
+                }
+            }
+            if (taxSingleResult < 0.0) {
+                taxSingleResult = 0.0;
             }
 
             Double taxAllResult = taxSocResult + taxIncomeResult + taxMilitaryResult + taxTaxResult + taxSingleResult;
