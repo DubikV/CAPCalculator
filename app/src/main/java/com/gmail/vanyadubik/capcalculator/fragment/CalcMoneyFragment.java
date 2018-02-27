@@ -8,13 +8,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.gmail.vanyadubik.capcalculator.R;
 import com.gmail.vanyadubik.capcalculator.activity.ResultActivity;
@@ -88,7 +91,6 @@ public class CalcMoneyFragment extends Fragment{
         incomeAll = (EditText) view.findViewById(R.id.income_all);
         initMoneyTextWather(incomeAll);
 
-
         costsAddPercentTIL = (TextInputLayout) view.findViewById(R.id.costs_add_percent_til);
         costsAddPercent = (EditText) view.findViewById(R.id.costs_add_percent);
         initPercentTextWather(costsAddPercent);
@@ -106,6 +108,19 @@ public class CalcMoneyFragment extends Fragment{
             }
         });
         initMoneyTextWather(costsAdd);
+
+        incomeAll.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId== EditorInfo.IME_ACTION_DONE ||
+                        actionId== EditorInfo.IME_ACTION_UNSPECIFIED) && !usingAddCosts.isChecked()) {
+                    ActivityUtils.hideKeyboard(getActivity());
+                    return true;
+                }
+                return false;
+            }
+        });
 
         taxSystem.setOnClickListener(new View.OnClickListener() {
             @Override

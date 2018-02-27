@@ -11,6 +11,7 @@
     <dimen name="margin_ctext_layout">10dp</dimen>
 
     <dimen name="text_size_big">20dp</dimen>
+    <dimen name="text_size_standart_big">17dp</dimen>
     <dimen name="text_size_standart">14dp</dimen>
     <dimen name="text_size_small">8dp</dimen>
 

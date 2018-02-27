@@ -40,7 +40,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/tax_system"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_size_standart"/>
+                            android:textSize="@dimen/text_size_standart_big"/>
 
                         <View
                             android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/income"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_size_standart"/>
+                            android:textSize="@dimen/text_size_standart_big"/>
 
                         <View
                             android:layout_width="wrap_content"
@@ -223,7 +223,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/costs"
                             android:textColor="@color/colorAccent"
-                            android:textSize="@dimen/text_size_standart"/>
+                            android:textSize="@dimen/text_size_standart_big"/>
 
                         <View
                             android:layout_width="wrap_content"
